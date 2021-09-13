@@ -6,6 +6,5 @@ public class LeetCode {
     }
 
     private static void twoSum() {
-        System.out.println("Hello World");
     }
 }
