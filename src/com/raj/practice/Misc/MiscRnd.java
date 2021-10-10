@@ -1,5 +1,5 @@
 package com.raj.practice.Misc;
 
-public class Rnd {
+public class MiscRnd {
 
 }
