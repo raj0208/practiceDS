@@ -4,6 +4,7 @@ public class InterviewCake {
     public static void main(String[] args) {
 //        findOneRepeating(new int[] { 1,5,3,6,2,4,5 });
         findTwoRepeatingNumbers(new int[] { 1,2,4,3,4,5,1 });
+        uniqueTwoNumbers(new int[] { 1,2,4,3,4,5,1 });
     }
 
 //    # Find a duplicate, Space Edition BEAST MODE
@@ -104,5 +105,39 @@ public class InterviewCake {
         }
 
         System.out.println(x + " and " + y + " are duplicates");
+    }
+
+    public static void uniqueTwoNumbers(int[] arr)
+    {
+        int sum = 0;
+        for (int item : arr) {
+            // Xor  all the elements of the array
+            // all the elements occurring twice will
+            // cancel out each other remaining
+            // two unique numbers will be xored
+            sum = (sum ^ item);
+        }
+
+        // Bitwise & the sum with it's 2's Complement
+        // Bitwise & will give us the sum containing
+        // only the rightmost set bit
+        sum = (sum & -sum);
+
+        // x and y will contains 2 unique elements elements initialized with 0 box number xored with 0 is number itself
+        int x = 0;
+        int y = 0;
+
+        // traversing the array again
+        for (int value : arr) {
+            // Bitwise & the arr[i] with the sum Two possibilities either result == 0 or result > 0
+            if ((value & sum) > 0) { // if result > 0 then arr[i] xored with the x
+                x = (x ^ value);
+            } else {  // if result == 0 then arr[i] xored with y
+                y = (y ^ value);
+            }
+        }
+
+        // print the the two unique numbers
+        System.out.println("The 2 unique elements are " + x + " and " + y);
     }
 }
