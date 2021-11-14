@@ -1,10 +1,19 @@
 package com.raj.practice.interviewcake;
 
+import com.sun.jdi.connect.Connector;
+
 public class InterviewCake {
     public static void main(String[] args) {
 //        findOneRepeating(new int[] { 1,5,3,6,2,4,5 });
-        findTwoRepeatingNumbers(new int[] { 1,2,4,3,4,5,1 });
-        uniqueTwoNumbers(new int[] { 1,2,4,3,4,5,1 });
+//        findTwoRepeatingNumbers(new int[] { 1,2,4,3,4,5,1 });
+//        uniqueTwoNumbers(new int[] { 1,2,4,3,4,5,1 });
+
+        maxBagValue(new CakeType[] {
+                new CakeType(7,160),
+                new CakeType(3,90),
+                new CakeType(2,15)
+        }, 20);
+
     }
 
 //    # Find a duplicate, Space Edition BEAST MODE
@@ -139,5 +148,64 @@ public class InterviewCake {
 
         // print the the two unique numbers
         System.out.println("The 2 unique elements are " + x + " and " + y);
+    }
+
+    public static class CakeType {
+        private int weight;
+        private int value;
+
+        public CakeType(int weight, int value) {
+            this.weight = weight;
+            this.value = value;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+
+        public void setWeight(int weight) {
+            this.weight = weight;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return "CakeType{" +
+                    "weight=" + weight +
+                    ", value=" + value +
+                    '}';
+        }
+    }
+
+    public static void maxBagValue(CakeType[] cakeTypes, int weightCapacity) {
+        long[] maxValuesAtCapacities = new long[weightCapacity + 1];
+
+        for (int curreentCapacity = 0; curreentCapacity < weightCapacity; curreentCapacity++) {
+            long currentMaxValue = 0;
+
+            for (CakeType cakeType: cakeTypes) {
+
+                if (cakeType.getWeight() == 0 && cakeType.getValue() != 0) {
+                    throw new IllegalArgumentException();
+                }
+
+                if (cakeType.getWeight() <= curreentCapacity) {
+                    long maxValueUsingCake = cakeType.getValue() + maxValuesAtCapacities[curreentCapacity - cakeType.getWeight()];
+
+                    currentMaxValue = Math.max(currentMaxValue, maxValueUsingCake);
+                }
+            }
+
+            maxValuesAtCapacities[curreentCapacity] = currentMaxValue;
+        }
+
+        System.out.println("Max " + maxValuesAtCapacities[weightCapacity]);
     }
 }
