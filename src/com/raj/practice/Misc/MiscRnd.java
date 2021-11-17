@@ -1,8 +1,17 @@
 package com.raj.practice.Misc;
 
+import java.util.*;
+import java.util.stream.Stream;
+
 public class MiscRnd {
     public static void main(String[] args) {
 //        oddNumber();
+//        TreeSet<String> s = new TreeSet<>();
+//        s.add("asdf");
+//        s.add("qwer");
+//        s.add("zxcv");
+//        s.descendingSet().forEach(System.out::println);
+
         int[] A = new int[7];
         A[0] = 1;
         A[1] = 2;

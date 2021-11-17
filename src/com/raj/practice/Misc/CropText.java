@@ -33,7 +33,6 @@ public class CropText {
         return result;
     }
 
-
     private static String cropText(String message, int K) {
         String[] words = message.split(" ");
         String result = "";
