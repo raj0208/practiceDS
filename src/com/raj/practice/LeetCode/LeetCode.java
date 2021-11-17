@@ -1,10 +1,15 @@
-package com.raj.practice;
+package com.raj.practice.LeetCode;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LeetCode {
 
     public static void main(String[] args) {
-        longestPalindromeSubString();
+//        longestPalindromeSubString();
+        lengthOfLongestSubstring();
     }
+
 
     public static void longestPalindromeSubString() {
         String s = "abcbd";
@@ -39,4 +44,20 @@ public class LeetCode {
 
         return right - left - 1;
     }
-}
+
+    public static void lengthOfLongestSubstring() {
+        String s = "pwwkew";
+
+        int len = s.length();
+        int ans = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i = 0, j = 0; j < len; j++) {
+            if (map.containsKey(s.charAt(j)))
+                i = Math.max(map.get(s.charAt(j)), i);
+            ans = Math.max(ans, j - i + 1);
+
+            map.put(s.charAt(j), j + 1);
+        }
+        System.out.println("Longest length is " + ans);
+    }
+    }
