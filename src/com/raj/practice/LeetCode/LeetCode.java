@@ -1,15 +1,17 @@
 package com.raj.practice.LeetCode;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class LeetCode {
 
     public static void main(String[] args) {
 //        longestPalindromeSubString();
-        lengthOfLongestSubstring();
+//        lengthOfLongestSubstring();
+        decodeString();
     }
-
 
     public static void longestPalindromeSubString() {
         String s = "abcbd";
@@ -60,4 +62,32 @@ public class LeetCode {
         }
         System.out.println("Longest length is " + ans);
     }
+
+    public static void decodeString() {
+        Stack<Integer> numStack = new Stack<>();
+        Stack<String> strStack = new Stack<>();
+
+        StringBuilder sb = new StringBuilder();
+        String temp = "";
+        String s = "3[a2[c]]"; //"3[a]2[bv]";
+
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                numStack.push(Integer.valueOf("" + s.charAt(i)));
+            } else if (s.charAt(i) == '[') {
+                strStack.push(sb.toString());
+                sb.setLength(0);
+            } else if (s.charAt(i) == ']') {
+                temp = strStack.pop();
+                temp += String.join("", Collections.nCopies(numStack.pop(), sb.toString()));
+                sb.setLength(0);
+                sb.append(temp);
+                temp = "";
+            } else if (Character.isAlphabetic(s.charAt(i))) {
+                sb.append(s.charAt(i));
+            }
+        }
+
+        System.out.println(sb.toString());
     }
+}
