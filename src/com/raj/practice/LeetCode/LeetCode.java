@@ -18,7 +18,10 @@ public class LeetCode {
 //        asteroidCollision();
 //        maxProfitBySelling();
 //        disappearedNumbers();
-        duplicateNumber();
+//        duplicateNumber();
+//        majorityElement();
+        maxProduct();
+
     }
 
     public static void longestPalindromeSubString() {
@@ -258,5 +261,35 @@ public class LeetCode {
                 l.add(nums[i]);
         }
         l.forEach(System.out::println);
+    }
+
+    public static void majorityElement() {
+        int[] num = {2,2,1,1,2,1,2};
+
+        int count = 0;
+        int majority = 0;
+        for (int i = 0; i < num.length; i++) {
+            if (count == 0) {
+                majority = num[i];
+            }
+            if (num[i] == majority) count++;
+            else count--;
+        }
+
+        System.out.println(majority);
+    }
+
+    public static void maxProduct() {
+        int[] num = { -1,-2,-3,0,3,5 };
+        int res = num[0];
+        int min = 1, max = 1;
+        for (int i = 0; i < num.length; i++) {
+            int temp = max * num[i];
+            max = Math.max(Math.max(temp, min * num[i]), num[i]);
+            min = Math.min(Math.min(temp, min * num[i]), num[i]);
+            res = Math.max(res, max);
+        }
+
+        System.out.println("Max : " + res);
     }
 }
