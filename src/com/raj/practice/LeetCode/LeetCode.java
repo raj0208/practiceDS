@@ -1,6 +1,9 @@
 package com.raj.practice.LeetCode;
 
+import jdk.nashorn.api.tree.CompilationUnitTree;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LeetCode {
 
@@ -12,7 +15,10 @@ public class LeetCode {
 //        sortColors();
 //        canJump();
 //        moveZeroes();
-        asteroidCollision();
+//        asteroidCollision();
+//        maxProfitBySelling();
+//        disappearedNumbers();
+        duplicateNumber();
     }
 
     public static void longestPalindromeSubString() {
@@ -193,5 +199,64 @@ public class LeetCode {
         }
 
         System.out.println(Arrays.toString(stack.toArray()));
+    }
+
+    public static void maxProfitBySelling() {
+        int[] prices = { 6,5,4,3,2,1}; //{7,1,5,3,6,4 };
+
+        if (prices.length == 0) return;
+
+        int maxProfit = 0;
+        int buyPrice = prices[0];
+
+        for (int i = 1; i < prices.length; i++) {
+            maxProfit = Math.max(maxProfit, prices[i] - buyPrice);
+            if (prices[i] < buyPrice)
+                buyPrice = prices[i];
+        }
+
+        System.out.println("Max Profit " + maxProfit);
+
+    }
+
+    public static void maxProfitByMultipleTxns() {
+        int[] prices = {2,1,5,3,6,4};
+        int maxProfit = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
+            }
+        }
+
+        System.out.println("Max Profit : " + maxProfit);
+    }
+
+    public static void disappearedNumbers() {
+        int[] nums = { 1,2,2,4,1 };
+        for (int i = 0; i < nums.length; i++) {
+            int n = Math.abs(nums[i]);
+            if (nums[n - 1] > 0)
+                nums[n-1] *= -1;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0)
+                System.out.println(i + 1);
+        }
+    }
+
+    public static void duplicateNumber() {
+        int[] nums =  {1,2,2,4,1}; //{ 4,3,2,7,8,2,3,1};
+
+        List<Integer> l = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            int n = Math.abs(nums[i]);
+            if (nums[n - 1] > 0)
+                nums[n-1] *= -1;
+            else
+                l.add(nums[i]);
+        }
+        l.forEach(System.out::println);
     }
 }
