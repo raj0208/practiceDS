@@ -9,7 +9,10 @@ public class LeetCode {
 //        lengthOfLongestSubstring();
 //        decodeString();
 //        wordBreak();
-        sortColors();
+//        sortColors();
+//        canJump();
+//        moveZeroes();
+        asteroidCollision();
     }
 
     public static void longestPalindromeSubString() {
@@ -137,5 +140,58 @@ public class LeetCode {
         }
 
         System.out.println(Arrays.toString(arr));
+    }
+
+    public static void canJump() {
+        int[] num = { 2,3,1,1,4 };
+
+        int len = num.length;
+        int reachable = 0;
+        boolean reached = false;
+        for (int i = 0; i < len && i <= reachable; i++) {
+            reachable = Math.max(reachable, i + num[i]);
+            if (reached = (reachable >= len - 1))
+                break;
+        }
+
+        System.out.println("Reached : " + reached);
+    }
+
+    public static void moveZeroes() {
+        int[] num = {0,1,0,3,12};
+
+        int curr = 0;
+        for ( int i = 0; i < num.length; i++) {
+            if (num[i] != 0) {
+                num[curr++] = num[i];
+            }
+        }
+        for (int i = curr; i < num.length; i++) {
+            num[i] = 0;
+        }
+
+        System.out.println(Arrays.toString(num));
+    }
+
+    public static void asteroidCollision() {
+        int[] asteroids = { -2, 5, 10, -15 };
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < asteroids.length; i++) {
+            if (asteroids[i] > 0) {
+                stack.push(asteroids[i]);
+            } else {
+                while(!stack.empty() && stack.peek() > 0 && stack.peek() < Math.abs(asteroids[i])) {
+                    stack.pop();
+                }
+
+                if (stack.empty() || stack.peek() < 0) {
+                    stack.push(asteroids[i]);
+                } else if (Math.abs(asteroids[i]) == Math.abs(stack.peek())) {
+                    stack.pop();
+                }
+            }
+        }
+
+        System.out.println(Arrays.toString(stack.toArray()));
     }
 }
