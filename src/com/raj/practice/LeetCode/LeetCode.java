@@ -20,8 +20,8 @@ public class LeetCode {
 //        disappearedNumbers();
 //        duplicateNumber();
 //        majorityElement();
-        maxProduct();
-
+//        maxProduct();
+        kadanes_maxsubarray();
     }
 
     public static void longestPalindromeSubString() {
@@ -291,5 +291,18 @@ public class LeetCode {
         }
 
         System.out.println("Max : " + res);
+    }
+
+    public static void kadanes_maxsubarray() {
+        int[] num = {-2,1,-3,4,-1,2,1,-5,4};
+//        int[] num = {5,4,-1, 7, 8};
+        int curr = num[0];
+        int max = curr;
+
+        for (int i = 1; i < num.length; i++) {
+            curr = Math.max(num[i], num[i] + curr);
+            max = Math.max(max, curr);
+        }
+        System.out.println(max);
     }
 }
