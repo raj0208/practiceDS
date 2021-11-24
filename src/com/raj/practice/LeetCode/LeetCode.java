@@ -21,7 +21,9 @@ public class LeetCode {
 //        duplicateNumber();
 //        majorityElement();
 //        maxProduct();
-        kadanes_maxsubarray();
+//        kadanes_maxsubarray();
+        duplicateLinkedList();
+        dupList();
     }
 
     public static void longestPalindromeSubString() {
@@ -304,5 +306,91 @@ public class LeetCode {
             max = Math.max(max, curr);
         }
         System.out.println(max);
+        
+    }
+
+    public static void duplicateLinkedList() {
+        RandomPointerNode head = getLinkedList();
+
+        RandomPointerNode curr = head;
+        while (curr != null) {
+            RandomPointerNode node = new RandomPointerNode(curr.getData());
+            node.setNext(curr.getNext());
+            curr.setNext(node);
+            curr = node.getNext();
+        }
+
+        // set random pointer
+        curr = head;
+        while (curr != null) {
+            curr.getNext().setRandom(curr.getRandom().getNext());
+            curr = curr.getNext().getNext();
+        }
+
+        RandomPointerNode newHead = head.getNext();
+        curr = head;
+
+        while(curr != null) {
+            RandomPointerNode temp = curr.getNext();
+            curr.setNext(temp != null ? temp.getNext() : null);
+            curr = temp;
+        }
+
+        while(newHead != null) {
+            System.out.println(newHead.toString());
+            newHead = newHead.getNext();
+        }
+
+        System.out.println("duplicate");
+    }
+
+    private static void dupList() {
+        RandomPointerNode head = getLinkedList();
+        Map<Integer, RandomPointerNode> map = new HashMap<>();
+
+        RandomPointerNode newHead = new RandomPointerNode(0);
+        RandomPointerNode curr = newHead;
+        while(head != null) {
+            RandomPointerNode temp = map.getOrDefault(head.getData(), null);
+            if (temp == null) {
+                temp = new RandomPointerNode(head.getData());
+                map.put(temp.getData(), temp);
+            }
+            curr.setNext(temp);
+            curr = temp;
+
+            if (!map.containsKey(head.getRandom().getData())) {
+                map.put(head.getRandom().getData(), new RandomPointerNode(head.getRandom().getData()));
+            }
+            curr.setRandom(map.get(head.getRandom().getData()));
+
+            head = head.getNext();
+        }
+
+        curr = newHead;
+
+        while((curr = curr.getNext()) != null) {
+            System.out.println(curr.toString());
+        }
+    }
+
+    private static RandomPointerNode getLinkedList() {
+        RandomPointerNode one = new RandomPointerNode(1);
+        RandomPointerNode two = new RandomPointerNode(2);
+        RandomPointerNode three = new RandomPointerNode(3);
+        RandomPointerNode four = new RandomPointerNode(4);
+
+        one.setNext(two);
+        one.setRandom(three);
+
+        two.setNext(three);
+        two.setRandom(two);
+
+        three.setNext(four);
+        three.setRandom(one);
+
+        four.setRandom(two);
+
+        return one;
     }
 }
