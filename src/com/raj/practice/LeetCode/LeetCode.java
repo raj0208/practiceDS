@@ -22,8 +22,37 @@ public class LeetCode {
 //        majorityElement();
 //        maxProduct();
 //        kadanes_maxsubarray();
-        duplicateLinkedList();
-        dupList();
+//        duplicateLinkedList();
+//        dupList();
+        mergeInterval();
+    }
+
+    private static void mergeInterval() {
+        int[][] intervals = new int[][] {
+                new int[] { 1,3 },
+                new int[] { 2,6 },
+                new int[] { 8,10 },
+                new int[] { 11,15 },
+        };
+        List<int[]> merged = new ArrayList<>();
+        Arrays.sort(intervals, (a,b) -> a[0] - b[0]);
+        int[] curr = intervals[0];
+        for (int i = 1; i < intervals.length; i++) {
+
+            if (curr[1] >= intervals[i][0]) {
+                if (curr[1] < intervals[i][1])
+                curr[1] = intervals[i][1];
+            } else {
+                merged.add(curr);
+                curr = intervals[i];
+            }
+        }
+        merged.add(curr);
+        int[][] m = merged.toArray(new int[0][0]);
+        for (int i = 0; i < merged.size(); i++) {
+            System.out.println(merged.get(i)[0] + ", " + merged.get(i)[1]);
+        }
+
     }
 
     public static void longestPalindromeSubString() {
@@ -392,5 +421,9 @@ public class LeetCode {
         four.setRandom(two);
 
         return one;
+    }
+
+    private static void rectangleOverlap() {
+        
     }
 }
