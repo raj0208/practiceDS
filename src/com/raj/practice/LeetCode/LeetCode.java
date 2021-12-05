@@ -25,7 +25,29 @@ public class LeetCode {
 //        duplicateLinkedList();
 //        dupList();
 //        mergeInterval();
-        countBinarySubstrings();
+//        countBinarySubstrings();
+    }
+
+
+    /**
+     * Method to return 1 if it ends with second string else 0
+     */
+    public static int endWithString(String line) {
+        int result = 0;
+        // Error handling - return 0 if line is null or it cannot be split into 2
+        if (line == null || line.split(",").length < 2)
+            return result;
+
+        String[] arrLine = line.split(",");
+        String str = arrLine[0].trim();
+        String endWith = arrLine[1].trim();
+
+        // Error handling - return 0 if source or endwith is null or source length is leess than endswith length
+        if (str == null || endWith == null || str.length() < endWith.length()) {
+            return result;
+        }
+
+        return str.endsWith(endWith) ? 1 : 0;
     }
 
     private static void countBinarySubstrings() {
