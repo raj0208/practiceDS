@@ -12,15 +12,20 @@ public class MiscRnd {
 //        s.add("zxcv");
 //        s.descendingSet().forEach(System.out::println);
 
-        int[] A = new int[7];
-        A[0] = 1;
-        A[1] = 2;
-        A[2] = 3;
-        A[3] = 3;
-        A[4] = 1;
-        A[5] = 3;
-        A[6] = 1;
-        solution(3, A);
+//        int[] A = new int[7];
+//        A[0] = 1;
+//        A[1] = 2;
+//        A[2] = 3;
+//        A[3] = 3;
+//        A[4] = 1;
+//        A[5] = 3;
+//        A[6] = 1;
+//        solution(3, A);
+
+        firstMissingPositive(new int[] {3,0, 1});
+        firstMissingPositive(new int[] {0});
+        firstMissingPositive(new int[] {1});
+        firstMissingPositive(new int[] {1,2});
     }
 
     public static void firstMissingPositive(int[] arr) {
@@ -30,7 +35,7 @@ public class MiscRnd {
         }
 
         for (int i = 0; i < arr.length; ) {
-            if (arr[i] > arr.length || arr[i] <= 0 || arr[arr[i]] == arr[i])
+            if (arr[i] > arr.length || arr[i] <= 0 || arr[arr[i] - 1] == arr[i])
                 i++;
             else {
                 int tmp = arr[arr[i] - 1];
