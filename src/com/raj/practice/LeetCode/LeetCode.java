@@ -26,8 +26,38 @@ public class LeetCode {
 //        dupList();
 //        mergeInterval();
 //        countBinarySubstrings();
+//        swapIntegers();
+//        findMax();
+
+//        String[] meow = {"aaa"};
+//        String s = "aaa";
+//        System.out.println(meow[0].equals(s));
+
+        String a = "a", b = new String("a");
+        System.out.println(a.equals(b));
+        System.out.println(a == b);
     }
 
+    private static void findMax() {
+        int a = 2, b = 5, c = 9;
+        int max = a;
+
+        boolean flag = max < b && (max = b) > 0;
+        flag = max < c && (max = c) > 0;
+        System.out.println(max);
+    }
+
+    private static void swapIntegers() {
+        int x = 5;
+        int y = 9;
+        System.out.println("x=" + x + ",y=" + y);
+        x = x ^ y ^ ( y = x);
+        System.out.println("x=" + x + ",y=" + y);
+        x = x + y - (y = x);
+        System.out.println("x=" + x + ",y=" + y);
+        x = x * y / (y = x);
+        System.out.println("x=" + x + ",y=" + y);
+    }
 
     /**
      * Method to return 1 if it ends with second string else 0
