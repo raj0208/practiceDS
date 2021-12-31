@@ -5,6 +5,8 @@ import com.sun.javadoc.ProgramElementDoc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -15,9 +17,9 @@ import java.util.stream.Stream;
 public class StreamExample {
     public static class Product {
         String name;
-        double price;
+        BigDecimal price;
 
-        public Product(String name, double price) {
+        public Product(String name, BigDecimal price) {
             this.name = name;
             this.price = price;
         }
@@ -26,16 +28,16 @@ public class StreamExample {
             return this.name;
         }
 
-        public double getPrice() {
+        public BigDecimal getPrice() {
             return this.price;
         }
     }
 
     private static List<Product> getProducts() {
         return List.of(
-                new Product("Apple Products", 100),
-                new Product("Google", 200),
-                new Product("Microsoft", 50)
+                new Product("Apple Products", BigDecimal.valueOf(100)),
+                new Product("Google", BigDecimal.valueOf(200)),
+                new Product("Microsoft", BigDecimal.valueOf(50))
         );
     }
 
@@ -47,6 +49,9 @@ public class StreamExample {
                     .map(Product::getName)
                     // Terminal operations (methods which returns data)
                     .forEach(System.out::println);
+
+//        generatingBuildingStream();
+        reducingStream();
     }
 
     private static void getStream() {
@@ -77,7 +82,7 @@ public class StreamExample {
         List<Product> products = getProducts();
 
         products.stream()
-                .filter(p -> p.getPrice() == 100)
+                .filter(p -> p.getPrice().compareTo(BigDecimal.valueOf(100)) == 0)
                 .forEach(System.out::println);
 
         // map is one to one transforming
@@ -114,7 +119,7 @@ public class StreamExample {
                 // .anyMatch(p -> p.getName().equals("Google"));
                 // all product
                 //.allMatch(p -> p.getPrice() < 0);
-                .noneMatch(p-> p.getPrice() > 100);
+                .noneMatch(p-> p.getPrice().intValue() > 100);
         System.out.println("Does the list contain at least one product" + flag);
 
         // find a particular element
@@ -134,7 +139,7 @@ public class StreamExample {
         List<Product> products = getProducts();
 
         List<String> names = products.stream()
-                .filter(p -> p.getPrice() >= 100)
+                .filter(p -> p.getPrice().intValue() >= 100)
                 .map(Product::getName)
                 .collect(Collectors.toList());
         System.out.println(names);
@@ -145,5 +150,41 @@ public class StreamExample {
                 .map(String::toUpperCase)
                 .collect(Collectors.joining("; "));
         System.out.println(s);
+    }
+
+    private static void generatingBuildingStream() {
+        Stream<UUID> uuids = Stream.generate(UUID::randomUUID);
+        uuids.limit(10).forEach(System.out::println);
+
+        Stream<BigInteger> powersOfTwo = Stream.iterate(BigInteger.ONE, n -> n.multiply(BigInteger.TWO));
+        powersOfTwo.limit(10).forEach(System.out::println);
+
+        Stream.iterate('A', l -> l <= 'Z', l -> (char)(l+1)).forEach(System.out::print);
+
+        Stream.Builder<String> builder = Stream.builder();
+        builder.add("one");
+        builder.add("two");
+        builder.build().forEach(System.out::println);
+    }
+
+    private static void reducingStream() {
+        List<Product> products = getProducts();
+
+        Optional<BigDecimal> optionalDouble = products.stream()
+                .map(Product::getPrice)
+                //.reduce((result, element) -> result.add(element));
+                .reduce(BigDecimal::add);
+        optionalDouble.ifPresentOrElse(
+                total -> System.out.println("Total value is " + total),
+                () -> System.out.println("There is no products"));
+
+        BigDecimal total = products.stream()
+                .map(Product::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println("Total is " + total);
+
+        BigDecimal total2 = products.stream()
+                .reduce(BigDecimal.ZERO, (reduce, product) -> reduce.add(product.getPrice()), BigDecimal::add);
+        System.out.println("Total is " + total2);
     }
 }
