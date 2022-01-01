@@ -5,6 +5,7 @@ import com.sun.javadoc.ProgramElementDoc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -51,8 +52,10 @@ public class StreamExample {
                     .forEach(System.out::println);
 
 //        generatingBuildingStream();
-        reducingStream();
+//        reducingStream();
+        reduceNcollect();
     }
+
 
     private static void getStream() {
         List<Product> product = getProducts();
@@ -186,5 +189,75 @@ public class StreamExample {
         BigDecimal total2 = products.stream()
                 .reduce(BigDecimal.ZERO, (reduce, product) -> reduce.add(product.getPrice()), BigDecimal::add);
         System.out.println("Total is " + total2);
+    }
+
+    private static void reduceNcollect() {
+        List<Product> products = getProducts();
+
+        // reduce - immutable collection
+        ArrayList<String> reduce = products.stream()
+                .reduce(
+                        new ArrayList<String>(),
+                        (list, product) -> {
+                            ArrayList<String> newList = new ArrayList<>(list);
+                            newList.add(product.getName());
+                            return newList;
+                        },
+                        (list1, list2) -> {
+                            ArrayList<String> newList = new ArrayList<>(list1);
+                            newList.addAll(list2);
+                            return newList;
+                        }
+                );
+        reduce.forEach(System.out::println);
+
+        // collect - mutable collection
+        List<String> collect = products.stream().collect(
+                ArrayList::new,
+                (list, product) -> list.add(product.getName()),
+                ArrayList::addAll
+        );
+        collect.forEach(System.out::println);
+
+        List<String> mapCollect = products.stream().map(Product::getName).collect(Collectors.toList());
+        mapCollect.forEach(System.out::println);
+    }
+
+    private static void groupingBy() {
+        List<Product> products = getProducts();
+
+        Map<String, List<Product>> productsByName = products.stream()
+                .collect(Collectors.groupingBy(Product::getName));
+
+        Map<BigDecimal, List<String>> productNamesByPrice = products.stream()
+            .collect(Collectors.groupingBy(Product::getPrice, Collectors.mapping(Product::getName, Collectors.toList())));
+
+//        Map<String, BigDecimal> totalPerName = products.stream()
+//                .collect(Collectors.groupingBy(Product::getName),
+//                        Collectors.mapping(Product::getPrice, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))));
+
+    }
+
+    private static void partitioningStream() {
+        List<Product> products = getProducts();
+
+        BigDecimal price = new BigDecimal("100");
+        Map<Boolean, List<Product>> partitionedProducts = products.stream()
+                .collect(Collectors.partitioningBy(product -> product.getPrice().compareTo(price) < 0));
+
+        System.out.println("Cheap products");
+        partitionedProducts.get(true).forEach(System.out::println);
+
+        System.out.println("Expensive products");
+        partitionedProducts.get(false).forEach(System.out::println);
+    }
+
+    private static void parallelStream() {
+        List<Product> products = getProducts();
+
+        List<String> names = products.parallelStream()  // .stream()
+                .filter(p -> p.getPrice().intValue() > 100)
+                .map(Product::getName)
+                .collect(Collectors.toList());
     }
 }
