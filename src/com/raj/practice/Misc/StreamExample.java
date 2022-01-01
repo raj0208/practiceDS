@@ -11,9 +11,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 public class StreamExample {
     public static class Product {
@@ -259,5 +257,9 @@ public class StreamExample {
                 .filter(p -> p.getPrice().intValue() > 100)
                 .map(Product::getName)
                 .collect(Collectors.toList());
+
+        // DoubleStream
+        // IntStream
+        // LongStream
     }
 }
