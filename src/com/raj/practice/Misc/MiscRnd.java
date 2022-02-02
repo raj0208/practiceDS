@@ -4,6 +4,19 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class MiscRnd {
+    public static class Emp {
+        public String getName() {
+            return Emp.class.getName();
+        }
+    }
+
+    public static class CEmp extends Emp {
+        @Override
+        public String getName() {
+            return CEmp.class.getName();
+        }
+    }
+
     public static void main(String[] args) {
 //        oddNumber();
 //        TreeSet<String> s = new TreeSet<>();
@@ -21,11 +34,11 @@ public class MiscRnd {
 //        A[5] = 3;
 //        A[6] = 1;
 //        solution(3, A);
-
-        firstMissingPositive(new int[] {3,0, 1});
-        firstMissingPositive(new int[] {0});
-        firstMissingPositive(new int[] {1});
-        firstMissingPositive(new int[] {1,2});
+//
+//        firstMissingPositive(new int[] {3,0, 1});
+//        firstMissingPositive(new int[] {0});
+//        firstMissingPositive(new int[] {1});
+//        firstMissingPositive(new int[] {1,2});
     }
 
     public static void firstMissingPositive(int[] arr) {

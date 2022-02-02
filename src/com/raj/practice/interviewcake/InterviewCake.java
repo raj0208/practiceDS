@@ -2,6 +2,9 @@ package com.raj.practice.interviewcake;
 
 import com.sun.jdi.connect.Connector;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class InterviewCake {
     public static void main(String[] args) {
 //        findOneRepeating(new int[] { 1,5,3,6,2,4,5 });
@@ -15,6 +18,32 @@ public class InterviewCake {
         }, 20);
 
     }
+
+//    Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+//    Example 1:
+//    Input: nums = [1,2,3,1]
+//    Output: true
+    private static void containsDuplicate() {
+        int[] numbers = {1,2,3,1};
+
+        if (numbers == null || numbers.length < 1) {
+            System.out.println("Empty array");
+            return;
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < numbers.length; i++) {
+            if (set.contains(numbers[i])) {
+                System.out.println("Duplicate number");
+                return;
+            }
+            set.add(numbers[i]);
+        }
+
+        System.out.println("No duplicates");
+    }
+
+
 
 //    # Find a duplicate, Space Edition BEAST MODE
 //

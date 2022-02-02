@@ -26,16 +26,47 @@ public class LeetCode {
 //        dupList();
 //        mergeInterval();
 //        countBinarySubstrings();
-//        swapIntegers();
+//        swapIntegers();Î
 //        findMax();
 
 //        String[] meow = {"aaa"};
 //        String s = "aaa";
 //        System.out.println(meow[0].equals(s));
+//        isNumberPalindrome();
+        factorialTrailingZeroes();
+    }
 
-        String a = "a", b = new String("a");
-        System.out.println(a.equals(b));
-        System.out.println(a == b);
+//  172.  Given an integer n, return the number of trailing zeroes in n!.
+    private static void factorialTrailingZeroes() {
+        int num = 25; // 10! = 3628800
+        int count = 0;
+
+        while (num > 0) {
+            num /= 5;
+            count += num;
+        }
+
+        System.out.println("Zero count " + count);
+    }
+
+//    Given an integer x, return true if x is palindrome integer.
+//    An integer is a palindrome when it reads the same backward as forward.
+//    For example, 121 is a palindrome while 123 is not.
+    private static void isNumberPalindrome() {
+        int num = 123;
+
+        if (num < 0 || (num % 10 == 0 && num != 0)) {
+            System.out.println("Not a palindrome");
+            return;
+        }
+
+        int reversedNum = 0;
+        while(num > reversedNum) {
+            reversedNum = (reversedNum * 10) + (num % 10);
+            num /= 10;
+        }
+
+        System.out.println("Is Palindrome " + (num == reversedNum || num == reversedNum / 10));
     }
 
     private static void findMax() {
