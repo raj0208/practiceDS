@@ -33,7 +33,73 @@ public class LeetCode {
 //        String s = "aaa";
 //        System.out.println(meow[0].equals(s));
 //        isNumberPalindrome();
-        factorialTrailingZeroes();
+        //factorialTrailingZeroes();
+        //power();
+//        reverseString();
+        longestCommonPrefix();
+    }
+
+    // 14. Longest Common Prefix
+    private static void longestCommonPrefix() {
+        List<String> strs = Arrays.asList( "leetcode", "leet", "lead"  );
+        String prefix = strs.get(0);
+
+        for (int i = 1; i < strs.size(); i++) {
+            while (!strs.get(i).startsWith(prefix)) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) {
+                    System.out.println("No prefix");
+                    return;
+                }
+            }
+        }
+
+        System.out.println("Prefix " + prefix);
+    }
+
+    // 344. ReverseString
+    private static void reverseString() {
+        char[] s = "Rajesh".toCharArray();
+        int left = 0;
+        int right = s.length - 1;
+
+        while (left < right) {
+            char c = s[left];
+            s[left] = s[right];
+            s[right] = c;
+            left++;
+            right--;
+        }
+
+        System.out.println();
+    }
+
+    // 50 Pow(x, n)
+    private static void power() {
+        double x = 2.0;
+        int n = -2147483648;
+
+        double ans = 1.0;
+        long num = n;
+        if (n < 0) {
+            num = Math.abs(num);
+        }
+
+        while ( num > 0) {
+            if (num % 2 == 0) {
+                x = x * x;
+                num = num / 2;
+            } else {
+                ans = ans * x;
+                num  = num - 1;
+            }
+        }
+
+        if ( n < 0) {
+            System.out.println((double)1.0 / (double)ans);
+        } else {
+            System.out.println(ans);
+        }
     }
 
 //  172.  Given an integer n, return the number of trailing zeroes in n!.
