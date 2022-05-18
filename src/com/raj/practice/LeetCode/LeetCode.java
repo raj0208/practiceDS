@@ -36,8 +36,84 @@ public class LeetCode {
         //factorialTrailingZeroes();
         //power();
 //        reverseString();
-        longestCommonPrefix();
+//        longestCommonPrefix();
+//        longestNumber();
+//        missingNumber();
+        findDuplicate();
     }
+
+//    We have a list of integers, where:
+//
+//    The integers are in the range 1..n1..n
+//    The list has a length of n+1n+1
+//    It follows that our list has at least one integer which appears at least twice. But it may have several duplicates, and each duplicate may appear more than twice.
+//
+//    Write a function which finds an integer that appears more than once in our list. Don't modify the input! (If there are multiple duplicates, you only need to find one of them.)
+//
+//    We're going to run this function on our new, super-hip MacBook Pro With Retina Display™. Thing is, the damn thing came with the RAM soldered right to the motherboard, so we can't upgrade our RAM. So we need to optimize for space!
+    private static void findDuplicate() {
+        int[] num = {1,2,3,4,5,3,3,3,3};
+
+        int low = 1;
+        int high = num.length - 1;
+        while (low < high) {
+            int mid = low + ((high - low)/2);
+            int llow = low;
+            int lhigh = mid;
+            int rlow = mid + 1;
+            int rhigh = high;
+
+            int count = 0;
+            for(int n : num) {
+                if (n >= llow && n <= lhigh) {
+                    count++;
+                }
+            }
+
+            int distinct = lhigh - llow + 1;
+            if (count > distinct) {
+                low = llow;
+                high = lhigh;
+            } else {
+                low = rlow;
+                high = rhigh;
+            }
+        }
+
+        System.out.println(low);
+    }
+
+    private static void missingNumber() {
+        int[] arr = {3,6,1,2};
+        int missing = 0;
+        int arrtotal = 0;
+
+        for(int i = 0; i < arr.length; i++) {
+            missing ^= (i + 1);
+            arrtotal ^= arr[i];
+        }
+
+        missing ^= arr.length + 1;
+        System.out.println(missing ^ arrtotal);
+    }
+
+    private static void longestNumber() {
+        int[] arr = { 3,30,34,5,9};
+        String[] s = new String[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            s[i] = String.valueOf(arr[i]);
+        }
+        Arrays.sort(s, (x,y) -> (x+y).compareTo(y+x));
+
+        StringBuilder sb = new StringBuilder();
+        for (String s1 : s) {
+            sb.append(s1);
+        }
+
+        System.out.println(sb.toString());
+    }
+
 
     // 14. Longest Common Prefix
     private static void longestCommonPrefix() {
@@ -469,6 +545,7 @@ public class LeetCode {
             if (count == 0) {
                 majority = num[i];
             }
+
             if (num[i] == majority) count++;
             else count--;
         }
