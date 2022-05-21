@@ -39,10 +39,50 @@ public class LeetCode {
 //        longestCommonPrefix();
 //        longestNumber();
 //        missingNumber();
-        findDuplicate();
+//        findDuplicate();
+//        singleNumber();  // LC 136
+//        reverseNumber(); // LC 7
+        isNumberPalindrome(); // LC 9, TC: O(Log n) , SC: O(1)
     }
 
-//    We have a list of integers, where:
+    private static void reverseNumber() {
+        int x = -1 * Integer.MAX_VALUE;
+        int n = x;
+        int reversed = 0;
+        int lastMax = Integer.MAX_VALUE / 10;
+        int lastMaxDigit = Integer.MAX_VALUE % 10;
+        int lastMin = Integer.MIN_VALUE / 10;
+        int lastMinDigit = Integer.MIN_VALUE % 10;
+
+        while (x != 0) {
+            int lastDigit = x % 10;
+            if ((reversed > lastMax || (reversed == lastMax && lastDigit > lastMaxDigit)) ||
+                    (reversed < lastMin || (reversed == lastMin && lastDigit < lastMinDigit))) {
+                System.out.println("Breached limit");
+                return;
+            }
+
+            reversed = reversed * 10 + lastDigit;
+            x = x / 10;
+        }
+        System.out.println(reversed + " is reverse of " + n);
+    }
+
+    private static void singleNumber() {
+        int[] num = {4,2,1,2,1};
+        if (num == null || num.length == 0) {
+            System.out.println("empty error");
+            return;
+        }
+
+        int res = 0;
+        for (int i = 0; i < num.length; i++) {
+            res ^= num[i];
+        }
+        System.out.println(res + " is single number");
+    }
+
+    //    We have a list of integers, where:
 //
 //    The integers are in the range 1..n1..n
 //    The list has a length of n+1n+1
