@@ -1,7 +1,5 @@
 package com.raj.practice.LeetCode;
 
-import jdk.nashorn.api.tree.CompilationUnitTree;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -445,7 +443,7 @@ public class LeetCode {
                 case 0:
                     arr[curr] ^= arr[low];
                     arr[low] ^= arr[curr];
-                    arr[curr] ^= arr[low];;
+                    arr[curr] ^= arr[low];
                     curr++;
                     low++;
                     break;
@@ -455,7 +453,7 @@ public class LeetCode {
                 case 2:
                     arr[curr] ^= arr[high];
                     arr[high] ^= arr[curr];
-                    arr[curr] ^= arr[high];;
+                    arr[curr] ^= arr[high];
                     high--;
                     break;
             }
