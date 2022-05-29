@@ -1,13 +1,17 @@
 package com.raj.practice.LeetCode;
 
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 public class LC {
     public static void main(String[] args) {
-        fizzbuzz();
-        singleNumber();
-        reverseNumber();
-        palindromeNumber();
-        pow();
-        nthRoot();
+//        fizzbuzz();
+//        singleNumber();
+//        reverseNumber();
+//        palindromeNumber();
+//        pow();
+//        nthRoot();
     }
 
     private static void nthRoot() {
@@ -17,24 +21,23 @@ public class LC {
         double right = x;
         double error = 0.001;
 
+        BiFunction<Double, Integer, Double> times = (number, xtimes) -> {
+            double ans = 1;
+            for (int i = 0; i < xtimes; i++) {
+                ans *= number;
+            }
+            return ans;
+        };
+
         while ((right - left) > error) {
             double mid = left + ((right - left) / 2);
-            if (multiply(mid, n) > x)
+            if (times.apply(mid, n) > x)
                 right = mid;
             else
                 left = mid;
         }
 
         System.out.println(left);
-    }
-
-    private static double multiply(double x, int n) {
-        double ans = 1;
-        for (int i = 0; i < n; i++) {
-            ans = ans * x;
-        }
-
-        return ans;
     }
 
     private static void pow() {
