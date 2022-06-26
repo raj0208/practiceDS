@@ -2,12 +2,20 @@ package com.raj.practice.LeetCode;
 
 import jdk.nashorn.api.tree.CompilationUnitTree;
 
+import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class LeetCode {
 
     public static void main(String[] args) {
+        // fizzduzz();
+//        singleNumber();  // LC 136
+//        reverseNumber(); // LC 7
+//        isNumberPalindrome(); // LC 9, TC: O(Log n) , SC: O(1)
+//        factorialTrailingZeroes(); // LC 172, TC:log(n), SC: O(1)
+
+
 //        longestPalindromeSubString();
 //        lengthOfLongestSubstring();
 //        decodeString();
@@ -33,16 +41,72 @@ public class LeetCode {
 //        String s = "aaa";
 //        System.out.println(meow[0].equals(s));
 //        isNumberPalindrome();
-        //factorialTrailingZeroes();
+//        factorialTrailingZeroes();
         //power();
 //        reverseString();
 //        longestCommonPrefix();
 //        longestNumber();
 //        missingNumber();
 //        findDuplicate();
-//        singleNumber();  // LC 136
-//        reverseNumber(); // LC 7
-        isNumberPalindrome(); // LC 9, TC: O(Log n) , SC: O(1)
+//        groupAnagram();
+        largestNumber();
+    }
+
+    private static void groupAnagram() {
+        Map<String, List<String>> res = new HashMap<>();
+        String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+
+        for (String s : strs) {
+            char[] c = s.toCharArray();
+            Arrays.sort(c);
+
+            String key = String.valueOf(c);
+            if (!res.containsKey(key)) {
+                List<String> val = new ArrayList<>();
+                val.add(s);
+
+                res.put(key, val);
+            } else {
+                res.get(key).add(s);
+            }
+        }
+
+
+        List<List<String>> result = new ArrayList<>();
+        result.addAll(res.values());
+    }
+
+    private static void fizzduzz() {
+//        for (int i = 1; i < 20; i++) {
+//            if (i % 5 == 0 || i % 3 == 0) {
+//                if (i % 3 == 0) {
+//                    System.out.print("Fizz");
+//                }
+//                if (i % 5 == 0) {
+//                    System.out.print("Buzz");
+//                }
+//                System.out.println("");
+//            }
+//            else {
+//                System.out.println(i);
+//            }
+//        }
+        int n = 15;
+        List<String> result = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
+                result.add("FizzBuzz");
+            } else if (i % 3 == 0) {
+                result.add("Fizz");
+            } else if (i % 5 == 0) {
+                result.add("Buzz");
+            } else {
+                result.add(i + "");
+            }
+        }
+        for (String s : result) {
+            System.out.println(s);
+        }
     }
 
     private static void reverseNumber() {
@@ -69,7 +133,7 @@ public class LeetCode {
     }
 
     private static void singleNumber() {
-        int[] num = {4,2,1,2,1};
+        int[] num = {4, 2, 1, 2, 1};
         if (num == null || num.length == 0) {
             System.out.println("empty error");
             return;
@@ -92,19 +156,19 @@ public class LeetCode {
 //
 //    We're going to run this function on our new, super-hip MacBook Pro With Retina Display™. Thing is, the damn thing came with the RAM soldered right to the motherboard, so we can't upgrade our RAM. So we need to optimize for space!
     private static void findDuplicate() {
-        int[] num = {1,2,3,4,5,3,3,3,3};
+        int[] num = {1, 2, 3, 4, 5, 3, 3, 3, 3};
 
         int low = 1;
         int high = num.length - 1;
         while (low < high) {
-            int mid = low + ((high - low)/2);
+            int mid = low + ((high - low) / 2);
             int llow = low;
             int lhigh = mid;
             int rlow = mid + 1;
             int rhigh = high;
 
             int count = 0;
-            for(int n : num) {
+            for (int n : num) {
                 if (n >= llow && n <= lhigh) {
                     count++;
                 }
@@ -124,11 +188,11 @@ public class LeetCode {
     }
 
     private static void missingNumber() {
-        int[] arr = {3,6,1,2};
+        int[] arr = {3, 5, 1, 2};
         int missing = 0;
         int arrtotal = 0;
 
-        for(int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             missing ^= (i + 1);
             arrtotal ^= arr[i];
         }
@@ -137,14 +201,27 @@ public class LeetCode {
         System.out.println(missing ^ arrtotal);
     }
 
+    private static void largestNumber() {
+        int[] arr = {3, 30, 34, 5, 9};
+        String[] s = new String[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            s[i] = String.valueOf(arr[i]);
+        }
+        Arrays.sort(s, (x,y) -> (y+x).compareTo(x+y));
+        for (String s1 : s) {
+            System.out.println(s1);
+        }
+    }
+
+
     private static void longestNumber() {
-        int[] arr = { 3,30,34,5,9};
+        int[] arr = {3, 30, 34, 5, 9};
         String[] s = new String[arr.length];
 
         for (int i = 0; i < arr.length; i++) {
             s[i] = String.valueOf(arr[i]);
         }
-        Arrays.sort(s, (x,y) -> (x+y).compareTo(y+x));
+        Arrays.sort(s, (x, y) -> (x + y).compareTo(y + x));
 
         StringBuilder sb = new StringBuilder();
         for (String s1 : s) {
@@ -157,7 +234,7 @@ public class LeetCode {
 
     // 14. Longest Common Prefix
     private static void longestCommonPrefix() {
-        List<String> strs = Arrays.asList( "leetcode", "leet", "lead"  );
+        List<String> strs = Arrays.asList("leetcode", "leet", "lead");
         String prefix = strs.get(0);
 
         for (int i = 1; i < strs.size(); i++) {
@@ -201,24 +278,24 @@ public class LeetCode {
             num = Math.abs(num);
         }
 
-        while ( num > 0) {
+        while (num > 0) {
             if (num % 2 == 0) {
                 x = x * x;
                 num = num / 2;
             } else {
                 ans = ans * x;
-                num  = num - 1;
+                num = num - 1;
             }
         }
 
-        if ( n < 0) {
-            System.out.println((double)1.0 / (double)ans);
+        if (n < 0) {
+            System.out.println((double) 1.0 / (double) ans);
         } else {
             System.out.println(ans);
         }
     }
 
-//  172.  Given an integer n, return the number of trailing zeroes in n!.
+    //  172.  Given an integer n, return the number of trailing zeroes in n!.
     private static void factorialTrailingZeroes() {
         int num = 25; // 10! = 3628800
         int count = 0;
@@ -231,7 +308,7 @@ public class LeetCode {
         System.out.println("Zero count " + count);
     }
 
-//  9.  Given an integer x, return true if x is palindrome integer.
+    //  9.  Given an integer x, return true if x is palindrome integer.
 //    An integer is a palindrome when it reads the same backward as forward.
 //    For example, 121 is a palindrome while 123 is not.
     private static void isNumberPalindrome() {
@@ -243,7 +320,7 @@ public class LeetCode {
         }
 
         int reversedNum = 0;
-        while(num > reversedNum) {
+        while (num > reversedNum) {
             reversedNum = (reversedNum * 10) + (num % 10);
             num /= 10;
         }
@@ -264,7 +341,7 @@ public class LeetCode {
         int x = 5;
         int y = 9;
         System.out.println("x=" + x + ",y=" + y);
-        x = x ^ y ^ ( y = x);
+        x = x ^ y ^ (y = x);
         System.out.println("x=" + x + ",y=" + y);
         x = x + y - (y = x);
         System.out.println("x=" + x + ",y=" + y);
@@ -306,24 +383,25 @@ public class LeetCode {
             }
         }
 
-        System.out.println(ans + Math.min(prev, cur));;
+        System.out.println(ans + Math.min(prev, cur));
+        ;
     }
 
     private static void mergeInterval() {
-        int[][] intervals = new int[][] {
-                new int[] { 1,3 },
-                new int[] { 2,6 },
-                new int[] { 8,10 },
-                new int[] { 11,15 },
+        int[][] intervals = new int[][]{
+                new int[]{1, 3},
+                new int[]{2, 6},
+                new int[]{8, 10},
+                new int[]{11, 15},
         };
         List<int[]> merged = new ArrayList<>();
-        Arrays.sort(intervals, (a,b) -> a[0] - b[0]);
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
         int[] curr = intervals[0];
         for (int i = 1; i < intervals.length; i++) {
 
             if (curr[1] >= intervals[i][0]) {
                 if (curr[1] < intervals[i][1])
-                curr[1] = intervals[i][1];
+                    curr[1] = intervals[i][1];
             } else {
                 merged.add(curr);
                 curr = intervals[i];
@@ -345,11 +423,11 @@ public class LeetCode {
             return;
         }
 
-        int start = 0, end  = 0;
+        int start = 0, end = 0;
 
         for (int i = 0; i < s.length(); i++) {
             int len1 = expandAroundCenter(s, i, i);
-            int len2 = expandAroundCenter(s, i, i+1);
+            int len2 = expandAroundCenter(s, i, i + 1);
 
             int len = Math.max(len1, len2);
 
@@ -377,7 +455,7 @@ public class LeetCode {
         int len = s.length();
         int ans = 0;
         Map<Character, Integer> map = new HashMap<>();
-        for(int i = 0, j = 0; j < len; j++) {
+        for (int i = 0, j = 0; j < len; j++) {
             if (map.containsKey(s.charAt(j)))
                 i = Math.max(map.get(s.charAt(j)), i);
             ans = Math.max(ans, j - i + 1);
@@ -421,10 +499,10 @@ public class LeetCode {
         dict.add("leet");
         dict.add("code");
 
-        boolean[] dp = new boolean[s.length()+1];
+        boolean[] dp = new boolean[s.length() + 1];
         dp[0] = true;
         for (int i = 1; i <= s.length(); i++) {
-            for (int j = 0; j < i ; j++) {
+            for (int j = 0; j < i; j++) {
                 if (dp[j] && dict.contains(s.substring(j, i))) {
                     dp[i] = true;
                     break;
@@ -436,16 +514,17 @@ public class LeetCode {
     }
 
     public static void sortColors() {
-        int[] arr = new int[] {2,0,2,1,1,0};
+        int[] arr = new int[]{2, 0, 2, 1, 1, 0};
 
         int low = 0, high = arr.length - 1, curr = 0;
 
-        while(curr <= high) {
-            switch(arr[curr]) {
+        while (curr <= high) {
+            switch (arr[curr]) {
                 case 0:
                     arr[curr] ^= arr[low];
                     arr[low] ^= arr[curr];
-                    arr[curr] ^= arr[low];;
+                    arr[curr] ^= arr[low];
+                    ;
                     curr++;
                     low++;
                     break;
@@ -455,7 +534,8 @@ public class LeetCode {
                 case 2:
                     arr[curr] ^= arr[high];
                     arr[high] ^= arr[curr];
-                    arr[curr] ^= arr[high];;
+                    arr[curr] ^= arr[high];
+                    ;
                     high--;
                     break;
             }
@@ -465,7 +545,7 @@ public class LeetCode {
     }
 
     public static void canJump() {
-        int[] num = { 2,3,1,1,4 };
+        int[] num = {2, 3, 1, 1, 4};
 
         int len = num.length;
         int reachable = 0;
@@ -480,10 +560,10 @@ public class LeetCode {
     }
 
     public static void moveZeroes() {
-        int[] num = {0,1,0,3,12};
+        int[] num = {0, 1, 0, 3, 12};
 
         int curr = 0;
-        for ( int i = 0; i < num.length; i++) {
+        for (int i = 0; i < num.length; i++) {
             if (num[i] != 0) {
                 num[curr++] = num[i];
             }
@@ -496,13 +576,13 @@ public class LeetCode {
     }
 
     public static void asteroidCollision() {
-        int[] asteroids = { -2, 5, 10, -15 };
+        int[] asteroids = {-2, 5, 10, -15};
         Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < asteroids.length; i++) {
             if (asteroids[i] > 0) {
                 stack.push(asteroids[i]);
             } else {
-                while(!stack.empty() && stack.peek() > 0 && stack.peek() < Math.abs(asteroids[i])) {
+                while (!stack.empty() && stack.peek() > 0 && stack.peek() < Math.abs(asteroids[i])) {
                     stack.pop();
                 }
 
@@ -518,7 +598,7 @@ public class LeetCode {
     }
 
     public static void maxProfitBySelling() {
-        int[] prices = { 6,5,4,3,2,1}; //{7,1,5,3,6,4 };
+        int[] prices = {6, 5, 4, 3, 2, 1}; //{7,1,5,3,6,4 };
 
         if (prices.length == 0) return;
 
@@ -536,7 +616,7 @@ public class LeetCode {
     }
 
     public static void maxProfitByMultipleTxns() {
-        int[] prices = {2,1,5,3,6,4};
+        int[] prices = {2, 1, 5, 3, 6, 4};
         int maxProfit = 0;
 
         for (int i = 1; i < prices.length; i++) {
@@ -549,11 +629,11 @@ public class LeetCode {
     }
 
     public static void disappearedNumbers() {
-        int[] nums = { 1,2,2,4,1 };
+        int[] nums = {1, 2, 2, 4, 1};
         for (int i = 0; i < nums.length; i++) {
             int n = Math.abs(nums[i]);
             if (nums[n - 1] > 0)
-                nums[n-1] *= -1;
+                nums[n - 1] *= -1;
         }
 
         for (int i = 0; i < nums.length; i++) {
@@ -563,13 +643,13 @@ public class LeetCode {
     }
 
     public static void duplicateNumber() {
-        int[] nums =  {1,2,2,4,1}; //{ 4,3,2,7,8,2,3,1};
+        int[] nums = {1, 2, 2, 4, 1}; //{ 4,3,2,7,8,2,3,1};
 
         List<Integer> l = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {
             int n = Math.abs(nums[i]);
             if (nums[n - 1] > 0)
-                nums[n-1] *= -1;
+                nums[n - 1] *= -1;
             else
                 l.add(nums[i]);
         }
@@ -577,7 +657,7 @@ public class LeetCode {
     }
 
     public static void majorityElement() {
-        int[] num = {2,2,1,1,2,1,2};
+        int[] num = {2, 2, 1, 1, 2, 1, 2};
 
         int count = 0;
         int majority = 0;
@@ -594,7 +674,7 @@ public class LeetCode {
     }
 
     public static void maxProduct() {
-        int[] num = { -1,-2,-3,0,3,5 };
+        int[] num = {-1, -2, -3, 0, 3, 5};
         int res = num[0];
         int min = 1, max = 1;
         for (int i = 0; i < num.length; i++) {
@@ -608,7 +688,7 @@ public class LeetCode {
     }
 
     public static void kadanes_maxsubarray() {
-        int[] num = {-2,1,-3,4,-1,2,1,-5,4};
+        int[] num = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
 //        int[] num = {5,4,-1, 7, 8};
         int curr = num[0];
         int max = curr;
@@ -618,7 +698,7 @@ public class LeetCode {
             max = Math.max(max, curr);
         }
         System.out.println(max);
-        
+
     }
 
     public static void duplicateLinkedList() {
@@ -642,13 +722,13 @@ public class LeetCode {
         RandomPointerNode newHead = head.getNext();
         curr = head;
 
-        while(curr != null) {
+        while (curr != null) {
             RandomPointerNode temp = curr.getNext();
             curr.setNext(temp != null ? temp.getNext() : null);
             curr = temp;
         }
 
-        while(newHead != null) {
+        while (newHead != null) {
             System.out.println(newHead.toString());
             newHead = newHead.getNext();
         }
@@ -662,7 +742,7 @@ public class LeetCode {
 
         RandomPointerNode newHead = new RandomPointerNode(0);
         RandomPointerNode curr = newHead;
-        while(head != null) {
+        while (head != null) {
             RandomPointerNode temp = map.getOrDefault(head.getData(), null);
             if (temp == null) {
                 temp = new RandomPointerNode(head.getData());
@@ -681,7 +761,7 @@ public class LeetCode {
 
         curr = newHead;
 
-        while((curr = curr.getNext()) != null) {
+        while ((curr = curr.getNext()) != null) {
             System.out.println(curr.toString());
         }
     }
@@ -707,6 +787,6 @@ public class LeetCode {
     }
 
     private static void rectangleOverlap() {
-        
+
     }
 }
