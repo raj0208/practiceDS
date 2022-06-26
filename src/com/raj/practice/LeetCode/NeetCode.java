@@ -4,15 +4,40 @@ import java.util.*;
 
 public class NeetCode {
     public static void main(String[] args) {
+        /****************/
+        //longestValidParanthesis(); // TC:  O(n), SC: O)n)
+
         //containsDpulicate();
         //validAnagram();
         //twoSum();
         //isValidPalindrome();
         //missingNumber();
         //groupAnagram();
-        validParenthesis();
-        /****************/
-        //longestValidParanthesis(); // TC:  O(n), SC: O)n)
+        //validParenthesis();
+        //hasLinkedListCycle();
+    }
+
+    /**
+     * 141. Linked List Cycle (https://leetcode.com/problems/linked-list-cycle/)
+     */
+    private static void hasLinkedListCycle() {
+        // https://leetcode.com/problems/linked-list-cycle/submissions/
+        /*
+        public boolean hasCycle(ListNode head) {
+            ListNode slow = head;
+            ListNode fast = head;
+
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+
+                if (slow == fast) {
+                    return true;
+                }
+            }
+
+            return false;
+        } */
     }
 
     /**
