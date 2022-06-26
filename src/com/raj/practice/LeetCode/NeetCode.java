@@ -9,18 +9,79 @@ public class NeetCode {
         //twoSum();
         //isValidPalindrome();
         //missingNumber();
-        groupAnagram();
+        //groupAnagram();
+        validParenthesis();
+        /****************/
+        //longestValidParanthesis(); // TC:  O(n), SC: O)n)
+    }
+
+    /**
+     * 20. Valid Parentheses (https://leetcode.com/problems/valid-parentheses/)
+     */
+    private static void validParenthesis() {
+        String s = null;
+        s = "()[]{}";
+//        s = "((";
+//        s = "(}";
+
+        Map<Character, Character> map = new HashMap <>();
+        map.put(')', '(');
+        map.put(']', '[');
+        map.put('}', '{');
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (map.containsKey(c)) {
+                if (stack.size() == 0 || map.get(c) != stack.peek()) {
+                    System.out.println("Invalid");
+                    break;
+                }
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
+        }
+        System.out.println("Valid " + (stack.size() == 0));
+    }
+
+    /**
+     * 32. Longest Valid Parentheses (https://leetcode.com/problems/longest-valid-parentheses/)
+     */
+    private static void longestValidParanthesis() {
+        // s = ")()())", 4
+        // s = "(()", 2
+        // s = "", 0
+        String s = ")()())";
+
+        int ans = 0;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                stack.push(i);
+            } else {
+                stack.pop();
+                if (stack.size() == 0) {
+                    stack.push(i);
+                } else {
+                    ans = Math.max(ans, i - stack.peek());
+                }
+            }
+        }
+        System.out.println(ans);
     }
 
     /**
      * 49. Group Anagrams (https://leetcode.com/problems/group-anagrams/)
      * time complexity is O(m*n) or O( sum of all chars in strs).
+     * O(n klogk)
      */
     private static void groupAnagram() {
         //Input: strs = ["eat","tea","tan","ate","nat","bat"]
         //Output: [["bat"],["nat","tan"],["ate","eat","tea"]
 
-        List<String> strs = Arrays.asList("eat","tea","tan","ate","nat","bat");
+        List<String> strs = Arrays.asList("eat", "tea", "tan", "ate", "nat", "bat");
 
         Map<String, List<String>> grouped = new HashMap<>();
         for (String s : strs) {
@@ -35,7 +96,7 @@ public class NeetCode {
         }
 
 
-        List<List<String>>  result = new ArrayList<>(grouped.values());
+        List<List<String>> result = new ArrayList<>(grouped.values());
         //result.addAll(grouped.values());
 
     }
@@ -46,10 +107,10 @@ public class NeetCode {
     private static void missingNumber() {
         // nums = [9,6,4,2,3,5,7,0,1], ans = 8
         // nums = [3,0,1], ans = 2
-        int[] nums = {9,6,4,2,3,5,7,0,1};
+        int[] nums = {9, 6, 4, 2, 3, 5, 7, 0, 1};
         int res = nums.length;
 
-        for(int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
             res = res ^ i ^ nums[i]; // a ^ b ^ b = a
         }
         System.out.println(res);
@@ -88,7 +149,7 @@ public class NeetCode {
      */
     private static void twoSum() {
         //nums = [2,7,11,15], target = 9
-        int[] nums = {2,7, 11,15};
+        int[] nums = {2, 7, 11, 15};
         int target = 22;
         int[] res = new int[2];
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -118,18 +179,18 @@ public class NeetCode {
         String t = "nagaram";
 
         if ((s == null && t != null) ||
-            (s != null && t == null) ||
-            (s.length() != t.length())) {
+                (s != null && t == null) ||
+                (s.length() != t.length())) {
             System.out.println("Not Anagram");
             return;
         }
         int[] chars = new int[26];
 
-        for(int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             chars[(s.charAt(i) - 'a')] += 1;
             chars[(t.charAt(i) - 'a')] -= 1;
         }
-        for(int i : chars) {
+        for (int i : chars) {
             if (i != 0) {
                 System.out.println("Not Anagram");
                 return;
@@ -142,9 +203,9 @@ public class NeetCode {
      * 217. Contains duplicate (https://leetcode.com/problems/contains-duplicate/)
      */
     private static void containsDpulicate() {
-        int[] arr = { 1,2,3,4,3,5};
+        int[] arr = {1, 2, 3, 4, 3, 5};
         Set<Integer> unique = new HashSet<>();
-        for(int i : arr) {
+        for (int i : arr) {
             if (!unique.contains(i)) {
                 System.out.println("Duplicate");
                 return;
