@@ -15,6 +15,47 @@ public class NeetCode {
         //groupAnagram();
         //validParenthesis();
         //hasLinkedListCycle();
+
+        topKElements();
+    }
+
+    /**
+     * 347. Top K Frequent Elements (https://leetcode.com/problems/top-k-frequent-elements/)
+     */
+    private static void topKElements() {
+        int[] nums = {1,1,1,2,2,3};
+        int k = 2;
+
+        Map<Integer,Integer> map = new HashMap<>();
+        List<Integer>[] bucket = new List[nums.length + 1];
+
+        for (int i : nums) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+
+        for (int i : map.keySet()) {
+            int frequency = map.get(i);
+            if (bucket[frequency] == null) {
+                bucket[frequency] = new ArrayList<>();
+            }
+            bucket[frequency].add(i);
+        }
+
+        List<Integer> res = new ArrayList<>();
+        for (int i = bucket.length - 1; i >=0; i--) {
+            if (bucket[i] != null) {
+                boolean  flag = false;
+                for(int j : bucket[i]) {
+                    res.add(j);
+                    if (flag = (res.size() == k)) {
+                        break;
+                    }
+                }
+                if (flag) break;
+            }
+        }
+        
+        System.out.println(res.toString());
     }
 
     /**
