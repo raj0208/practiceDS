@@ -16,7 +16,45 @@ public class NeetCode {
         //validParenthesis();
         //hasLinkedListCycle();
 
-        topKElements();
+        //topKElements();
+        validSudoku();
+    }
+
+    private static char[][] getSudoku() {
+        char[][] array = {
+            {'5','3','.','.','7','.','.','.','.'}
+            ,{'6','.','.','1','9','5','.','.','.'}
+            ,{'.','9','8','.','.','.','.','6','.'}
+            ,{'8','.','.','.','6','.','.','.','3'}
+            ,{'4','.','.','8','.','3','.','.','1'}
+            ,{'7','.','.','.','2','.','.','.','6'}
+            ,{'.','6','.','.','.','.','2','8','.'}
+            ,{'.','.','.','4','1','9','.','.','5'}
+            ,{'.','.','.','.','8','.','.','7','3'}
+        };
+
+        return array;
+    }
+
+    private static void validSudoku() {
+        char[][] board = getSudoku();
+        Set<String> seen = new HashSet<>();
+
+        for(int row = 0; row < board.length; row++) {
+            for(int col = 0; col < board[row].length; col++) {
+                char num = board[row][col];
+                if (num != '.')
+                    if (!seen.add(num + " R" + row) ||
+                            !seen.add(num + " C" + col) ||
+                            !seen.add(num + " B" + row/3 + "-" + col/3)) {
+                        System.out.println("Not Valid");
+                        return;
+                    }
+            }
+        }
+
+        System.out.println("Valid");
+
     }
 
     /**
@@ -54,7 +92,7 @@ public class NeetCode {
                 if (flag) break;
             }
         }
-        
+
         System.out.println(res.toString());
     }
 
