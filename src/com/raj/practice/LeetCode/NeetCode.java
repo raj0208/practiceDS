@@ -36,6 +36,9 @@ public class NeetCode {
         return array;
     }
 
+    /**
+     * 36. Valid Sudoku (https://leetcode.com/problems/valid-sudoku/)
+     */
     private static void validSudoku() {
         char[][] board = getSudoku();
         Set<String> seen = new HashSet<>();
