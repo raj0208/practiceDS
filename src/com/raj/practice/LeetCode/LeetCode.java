@@ -48,12 +48,12 @@ public class LeetCode {
 //        missingNumber();
 //        findDuplicate();
 //        singleNumber();  // LC 136
-//        reverseNumber(); // LC 7
+        reverseNumber(); // LC 7
         isNumberPalindrome(); // LC 9, TC: O(Log n) , SC: O(1)
     }
 
     private static void reverseNumber() {
-        int x = -1 * Integer.MAX_VALUE;
+        int x = Integer.MAX_VALUE/10 + 9;
         int n = x;
         int reversed = 0;
         int lastMax = Integer.MAX_VALUE / 10;
