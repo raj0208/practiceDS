@@ -88,16 +88,15 @@ public class LeetCode {
 
     public static void maxProfit() {
         CakeType[] cakes = {
-                new CakeType(1, 30),
-                new CakeType(2, 20),
-                new CakeType(3,10)
+                new CakeType(3, 40),
+                new CakeType(5, 70),
         };
 
-        maxDuffelBagValue(cakes, 3);
+        maxDuffelBagValue(cakes, 8);
     }
 
     private static void maxDuffelBagValue(CakeType[] cakes, int weightCapacity) {
-        long[] maxValuesAtCapacities = new long[cakes.length + 1];
+        long[] maxValuesAtCapacities = new long[weightCapacity + 1];
 
         for (int currentCapacity = 0; currentCapacity <= weightCapacity; currentCapacity++) {
             long currentMaxValue = 0;
