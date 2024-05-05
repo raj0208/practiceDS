@@ -1,9 +1,11 @@
 package com.raj.practice.LeetCode;
 
-import jdk.nashorn.api.tree.CompilationUnitTree;
-
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class LeetCode {
 
@@ -48,8 +50,141 @@ public class LeetCode {
 //        missingNumber();
 //        findDuplicate();
 //        singleNumber();  // LC 136
-        reverseNumber(); // LC 7
-        isNumberPalindrome(); // LC 9, TC: O(Log n) , SC: O(1)
+//        reverseNumber(); // LC 7
+//        isNumberPalindrome(); // LC 9, TC: O(Log n) , SC: O(1)
+//        jobChaining();
+//        testNullPointer();
+//        cosumersupplier();
+
+        maxProfit();
+    }
+
+
+    public static class CakeType {
+        private int weight;
+        private int value;
+
+        public CakeType(int weight, int value) {
+            this.weight = weight;
+            this.value = value;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+
+        public void setWeight(int weight) {
+            this.weight = weight;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+    }
+
+    public static void maxProfit() {
+        CakeType[] cakes = {
+                new CakeType(1, 30),
+                new CakeType(2, 20),
+                new CakeType(3,10)
+        };
+
+        maxDuffelBagValue(cakes, 3);
+    }
+
+    private static void maxDuffelBagValue(CakeType[] cakes, int weightCapacity) {
+        long[] maxValuesAtCapacities = new long[cakes.length + 1];
+
+        for (int currentCapacity = 0; currentCapacity <= weightCapacity; currentCapacity++) {
+            long currentMaxValue = 0;
+
+            for (CakeType cake : cakes) {
+                if (cake.getWeight() == 0 && cake.getValue() != 0) {
+                    throw new RuntimeException("Max value is infinity!");
+                }
+
+                if (cake.getWeight() <= currentCapacity) {
+                    long maxValueUsingCake = cake.getValue() + maxValuesAtCapacities[currentCapacity - cake.getWeight()];
+
+                    currentMaxValue = Math.max(maxValueUsingCake, currentMaxValue);
+                }
+            }
+
+            maxValuesAtCapacities[currentCapacity] = currentMaxValue;
+        }
+
+        System.out.println("Max value for weight capacity " + weightCapacity + " is " + maxValuesAtCapacities[weightCapacity]);
+
+    }
+
+    private static void cosumersupplier() {
+        Map<String, Integer> nameMap = new HashMap<>();
+        nameMap.putIfAbsent("Raj", 100);
+        System.out.println(nameMap.computeIfAbsent("Raj", String::length));
+        Integer value = nameMap.computeIfAbsent("John", s -> s.length());
+        System.out.println(value);
+
+        // Only input no output, Consumer only accepts
+        Consumer<String> print = System.out::println;
+        print.accept("Consumr accepted the data");
+        BiConsumer<String, Integer> biprint = (s, i) -> System.out.println(s + " data is " + i );
+        biprint.accept("String", 10);
+
+        // Supplier only return the data (get)
+        Supplier<String> getName = () -> "Supplier returning the data";
+        System.out.println(getName.get());
+
+        // Function apply logic to passed data and returns
+        Function<Integer, String> format = s -> s + " returned by function";
+        System.out.println(format.apply(5));
+
+        //Prediate tests the condition and return boolean
+        Predicate<Integer> greaterThan5 = s -> s > 5;
+        System.out.println(greaterThan5.test(6));
+    }
+
+    public static void testNullPointer() {
+        List<Integer> myList = null;
+
+        if (isEven(10) || myList.get(0) == 2 || myList.get(1) == 4) { //1
+            myList = List.of(2, 3);
+        }
+
+        if (isEven(myList.get(0)) && myList.contains(4) && isEven(myList.get(3))) { //2
+            myList = null;
+        }
+
+        System.out.println("First number: " + myList.get(0)); //3.
+    }
+
+    private static boolean isEven(int number) {
+        return number % 2 == 0;
+    }
+
+
+
+    private static void jobChaining() {
+        List<int[]> jobs = Arrays.asList(
+                new int[]{1, 25, 3, 1},
+                new int[]{2, 25, 23, 1},
+                new int[]{23, 25, 0, 1},
+                new int[]{4, 25, 3, 1},
+                new int[]{3, 25, 23, 1}
+        );
+
+        Map<Integer, int[]> child = new HashMap<>();
+        Map<Integer, int[]> parent = new HashMap<>();
+
+        for (int[] job : jobs
+        ) {
+            parent.putIfAbsent(job[0], job);
+        }
+
+        
     }
 
     private static void reverseNumber() {
@@ -638,10 +773,19 @@ public class LeetCode {
             max = Math.max(max, curr);
         }
         System.out.println(max);
+
+
+
+
+        Stack<String> stack = new Stack<>();
+        stack.push("asdfa");
+        stack.push("asdf");
+        stack.pop();
+
         
     }
 
-    public static void duplicateLinkedList() {
+    public static void duplicateLinked() {
         RandomPointerNode head = getLinkedList();
 
         RandomPointerNode curr = head;
