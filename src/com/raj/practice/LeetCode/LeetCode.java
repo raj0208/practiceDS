@@ -56,7 +56,40 @@ public class LeetCode {
 //        testNullPointer();
 //        cosumersupplier();
 
-        maxProfit();
+//        maxProfit();
+        validator();
+    }
+
+    private static void validator() {
+        Map<Character, Character> openToClose = new HashMap<>();
+        openToClose.put('(', ')');
+        openToClose.put('{', '}');
+        openToClose.put('[', ']');
+
+        Stack<Character> stack = new Stack<>();
+
+        String code = "{[{()";
+
+        Set<Character> open = openToClose.keySet();
+        Set<Character> close = new HashSet<>(openToClose.values());
+
+        for (int i = 0; i < code.length(); i++) {
+            char bracket = code.charAt(i);
+
+            if (open.contains(bracket)) {
+                stack.push(openToClose.get(bracket));
+            } else if (close.contains(bracket)) {
+                if (stack.isEmpty() || stack.peek() != bracket){
+                    System.out.println("Not valid");
+                    break;
+                } else {
+                    stack.pop();
+                }
+            }
+        }
+
+        System.out.println("valid brackets ->" + stack.isEmpty());
+
     }
 
 
@@ -92,7 +125,7 @@ public class LeetCode {
                 new CakeType(5, 70),
         };
 
-        maxDuffelBagValue(cakes, 8);
+        maxDuffelBagValue(cakes, 9);
     }
 
     private static void maxDuffelBagValue(CakeType[] cakes, int weightCapacity) {
