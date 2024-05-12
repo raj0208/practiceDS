@@ -32,26 +32,66 @@ public class StreamExample {
         }
     }
 
+    public static class MovieMetaData {
+        private final int id;
+        private final String name;
+        private final String role;
+
+        public MovieMetaData(int id, String name, String role) {
+            this.id = id;
+            this.name = name;
+            this.role = role;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getRole() {
+            return role;
+        }
+    }
+
+
+
     private static List<Product> getProducts() {
         return List.of(
                 new Product("Apple Products", BigDecimal.valueOf(100)),
                 new Product("Google", BigDecimal.valueOf(200)),
-                new Product("Microsoft", BigDecimal.valueOf(50))
+                new Product("Microsoft", BigDecimal.valueOf(50)),
+                new Product("Alphabet", BigDecimal.valueOf(50)),
+                new Product("X", BigDecimal.valueOf(200))
+        );
+    }
+
+    private static List<MovieMetaData> getMovieMetaData() {
+        return List.of(
+                new MovieMetaData(1, "AB", "cast"),
+                new MovieMetaData(1, "MD", "director"),
+                new MovieMetaData(2, "DK", "cast"),
+                new MovieMetaData(2, "RK", "cast"),
+                new MovieMetaData(2, "SG", "director11")
         );
     }
 
     public static void main(String[] args) {
         // Operations to stream
-        getProducts().stream()
-                    // Intermediate operations (methods which returns Stream)
-                    .filter(product -> product.getName().equals("Apple"))
-                    .map(Product::getName)
-                    // Terminal operations (methods which returns data)
-                    .forEach(System.out::println);
+//        getProducts().stream()
+//                    // Intermediate operations (methods which returns Stream)
+//                    .filter(product -> product.getName().equals("Apple"))
+//                    .map(Product::getName)
+//                    // Terminal operations (methods which returns data)
+//                    .forEach(System.out::println);
 
 //        generatingBuildingStream();
 //        reducingStream();
-        reduceNcollect();
+//        reduceNcollect();
+//        groupingBy();
+        groupByMovie();
     }
 
 
@@ -221,11 +261,28 @@ public class StreamExample {
         mapCollect.forEach(System.out::println);
     }
 
+    private static void groupByMovie() {
+        List<MovieMetaData> movieMetaData = getMovieMetaData();
+
+        Map<Integer, List<MovieMetaData>> movieMetaDataById = movieMetaData.stream()
+                .collect(Collectors.groupingBy(MovieMetaData::getId));
+        String director = movieMetaDataById.get(2).stream()
+                .filter(x -> x.role.equals("director")).map(MovieMetaData::getName).collect(Collectors.joining(","));
+        String cast = movieMetaDataById.get(2).stream()
+                .filter(x -> x.role.equals("cast")).map(MovieMetaData::getName).map(String::toUpperCase)
+                .sorted((s1, s2) -> s2.compareTo(s1))
+                .collect(Collectors.joining(","));
+
+        Map<Integer, List<String>> movieById = movieMetaData.stream()
+                .collect(Collectors.groupingBy(MovieMetaData::getId, Collectors.mapping(MovieMetaData::getName, Collectors.toList())));
+
+    }
+
     private static void groupingBy() {
         List<Product> products = getProducts();
 
-        Map<String, List<Product>> productsByName = products.stream()
-                .collect(Collectors.groupingBy(Product::getName));
+        Map<BigDecimal, List<Product>> productsByName = products.stream()
+                .collect(Collectors.groupingBy(Product::getPrice));
 
         Map<BigDecimal, List<String>> productNamesByPrice = products.stream()
             .collect(Collectors.groupingBy(Product::getPrice, Collectors.mapping(Product::getName, Collectors.toList())));
