@@ -1,63 +1,20 @@
 package com.raj.practice.Misc;
 
-import com.sun.javadoc.ProgramElementDoc;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Pattern;
-import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class StreamExample {
-    public static class Product {
-        String name;
-        BigDecimal price;
-
-        public Product(String name, BigDecimal price) {
-            this.name = name;
-            this.price = price;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public BigDecimal getPrice() {
-            return this.price;
-        }
-    }
-
-    public static class MovieMetaData {
-        private final int id;
-        private final String name;
-        private final String role;
-
-        public MovieMetaData(int id, String name, String role) {
-            this.id = id;
-            this.name = name;
-            this.role = role;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getRole() {
-            return role;
-        }
-    }
-
-
-
     private static List<Product> getProducts() {
         return List.of(
                 new Product("Apple Products", BigDecimal.valueOf(100)),
@@ -94,13 +51,12 @@ public class StreamExample {
         groupByMovie();
     }
 
-
     private static void getStream() {
         List<Product> product = getProducts();
 
         Stream<Product> stream1 = product.stream();
 
-        String[] array = new String[] {"A", "B", "C"};
+        String[] array = new String[]{"A", "B", "C"};
         Stream<String> stream2 = Arrays.stream(array);
 
         //factory methods
@@ -110,7 +66,7 @@ public class StreamExample {
         Stream<?> stream5 = Stream.empty();
 
         // start is nclusive, end is exclusive
-        IntStream dice = new Random().ints(1,7);
+        IntStream dice = new Random().ints(1, 7);
 
 //        try(BufferedReader in = new BufferedReader(new FileReader("text.txt", StandardCharsets.UTF_8))) {
 //            in.lines().forEach(System.out::println);
@@ -148,11 +104,11 @@ public class StreamExample {
     private static void searchInStream() {
         List<Product> products = getProducts();
 
-        Optional<Product> opt  = products.stream()
-            .filter(p -> p.getName().equals("Google"))
+        Optional<Product> opt = products.stream()
+                .filter(p -> p.getName().equals("Google"))
                 // ternimal operation
-            // .findFirst();
-            .findAny();
+                // .findFirst();
+                .findAny();
         opt.ifPresent(System.out::println);
 
         boolean flag = products.stream()
@@ -160,7 +116,7 @@ public class StreamExample {
                 // .anyMatch(p -> p.getName().equals("Google"));
                 // all product
                 //.allMatch(p -> p.getPrice() < 0);
-                .noneMatch(p-> p.getPrice().intValue() > 100);
+                .noneMatch(p -> p.getPrice().intValue() > 100);
         System.out.println("Does the list contain at least one product" + flag);
 
         // find a particular element
@@ -200,7 +156,7 @@ public class StreamExample {
         Stream<BigInteger> powersOfTwo = Stream.iterate(BigInteger.ONE, n -> n.multiply(BigInteger.TWO));
         powersOfTwo.limit(10).forEach(System.out::println);
 
-        Stream.iterate('A', l -> l <= 'Z', l -> (char)(l+1)).forEach(System.out::print);
+        Stream.iterate('A', l -> l <= 'Z', l -> (char) (l + 1)).forEach(System.out::print);
 
         Stream.Builder<String> builder = Stream.builder();
         builder.add("one");
@@ -285,7 +241,7 @@ public class StreamExample {
                 .collect(Collectors.groupingBy(Product::getPrice));
 
         Map<BigDecimal, List<String>> productNamesByPrice = products.stream()
-            .collect(Collectors.groupingBy(Product::getPrice, Collectors.mapping(Product::getName, Collectors.toList())));
+                .collect(Collectors.groupingBy(Product::getPrice, Collectors.mapping(Product::getName, Collectors.toList())));
 
 //        Map<String, BigDecimal> totalPerName = products.stream()
 //                .collect(Collectors.groupingBy(Product::getName),
@@ -318,5 +274,47 @@ public class StreamExample {
         // DoubleStream
         // IntStream
         // LongStream
+    }
+
+    public static class Product {
+        String name;
+        BigDecimal price;
+
+        public Product(String name, BigDecimal price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public BigDecimal getPrice() {
+            return this.price;
+        }
+    }
+
+    public static class MovieMetaData {
+        private final int id;
+        private final String name;
+        private final String role;
+
+        public MovieMetaData(int id, String name, String role) {
+            this.id = id;
+            this.name = name;
+            this.role = role;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getRole() {
+            return role;
+        }
     }
 }
