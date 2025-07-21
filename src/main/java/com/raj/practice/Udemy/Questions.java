@@ -6,11 +6,31 @@ import java.util.List;
 
 public class Questions {
     public static void main(String[] args) {
-        reverseInteger();
+        mypower();
+//        reverseInteger();
 //        trailingZeros();
 //        isPalindromeInteger();
 //        findSingleNumber();
 //        fizzbuzz();
+    }
+
+    // TC : O(log2  n), SC O(1)
+    private static void mypower() {
+        double x = 2;
+        int n = 100;
+
+        long num = Math.abs((long) n);
+        double result = 1.0;
+        while (num != 0) {
+            if (num % 2 == 1) { // if num is odd number
+                result = result * x;
+                num = num - 1;
+            }
+            x = x * x;
+            num = num / 2;
+        }
+
+        System.out.println( n < 0 ? 1.0 / result : result);
     }
 
     // TC : O(log10 x), SC: O(1)
