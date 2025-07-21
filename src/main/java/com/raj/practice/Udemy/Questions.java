@@ -6,12 +6,41 @@ import java.util.List;
 
 public class Questions {
     public static void main(String[] args) {
-        trailingZeros();
+        reverseInteger();
+//        trailingZeros();
 //        isPalindromeInteger();
 //        findSingleNumber();
 //        fizzbuzz();
     }
 
+    // TC : O(log10 x), SC: O(1)
+    private static void reverseInteger() {
+        int[] nums = {-123,345234, -123123, Integer.MAX_VALUE, Integer.MIN_VALUE};
+        int max = Integer.MAX_VALUE / 10;
+        int min = Integer.MIN_VALUE / 10;
+
+        for(int num : nums) {
+            System.out.println("Number is " + num);
+            boolean flag = true;
+            int reversed = 0;
+
+            while (num != 0) {
+                int lastdigit = num % 10;
+
+                if ((reversed > max) || (reversed < min)) {
+                    flag = false;
+                    break;
+                }
+
+                reversed = reversed * 10 + lastdigit;
+                num = num / 10;
+            }
+
+            System.out.println(flag ? reversed : "Breached");
+        }
+    }
+
+    // TC O(log5 n), SC: O(1)
     private static void trailingZeros() {
         int n = 125;
 
