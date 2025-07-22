@@ -51,6 +51,12 @@ public class Questions {
         String[] storeRoman = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
 
         int[] nums = {58, 1994, 998, 3558};
+        /*
+        Integer 58 = 'LVIII'
+        Integer 1994 = 'MCMXCIV'
+        Integer 998 = 'CMXCVIII'
+        Integer 3558 = 'MMMDLVIII'
+         */
         StringBuilder romanNumeral = new StringBuilder();
 
         for (int num : nums) {
