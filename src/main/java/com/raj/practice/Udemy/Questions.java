@@ -2,16 +2,71 @@ package com.raj.practice.Udemy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Questions {
     public static void main(String[] args) {
-        mypower();
+        integer2Roman();
+//        roman2Integer();
+//        mypower();
 //        reverseInteger();
 //        trailingZeros();
 //        isPalindromeInteger();
 //        findSingleNumber();
 //        fizzbuzz();
+    }
+
+    // TC : O(n), SC: O(1)
+    private static void roman2Integer() {
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+
+        String[] romans = { "LVIII", "MCMXCIV", "CMXCVIII" };
+
+        for(String roman : romans) {
+            int result = 0;
+            int n = roman.length();
+            for (int i = 0; i < n ; i++) {
+                if ((i < n -1) && map.get(roman.charAt(i)) < map.get(roman.charAt(i + 1))) {
+                    result -= map.get(roman.charAt(i));
+                } else {
+                    result += map.get(roman.charAt(i));
+                }
+            }
+
+            System.out.println("Roman '" + roman + "' = " + result);
+        }
+    }
+
+    private static void integer2Roman() {
+        int[] storeInt = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] storeRoman = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+
+        int[] nums = {58, 1994, 998, 3558};
+        StringBuilder romanNumeral = new StringBuilder();
+
+        for (int num : nums) {
+            int n = num;
+            romanNumeral.setLength(0);
+
+            for (int i = 0; i < storeInt.length; i++) {
+                while (n >= storeInt[i]) {
+                    String symbol = storeRoman[i];
+                    romanNumeral.append(symbol);
+                    n -= storeInt[i];
+                }
+            }
+
+            System.out.println("Integer " + num + " = '" + romanNumeral + "'");
+        }
     }
 
     // TC : O(log2  n), SC O(1)
