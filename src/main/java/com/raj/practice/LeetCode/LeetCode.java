@@ -882,7 +882,7 @@ public class LeetCode {
         }
     }
 
-    private static RandomPointerNode getLinkedList() {
+    public static RandomPointerNode getLinkedList() {
         RandomPointerNode one = new RandomPointerNode(1);
         RandomPointerNode two = new RandomPointerNode(2);
         RandomPointerNode three = new RandomPointerNode(3);

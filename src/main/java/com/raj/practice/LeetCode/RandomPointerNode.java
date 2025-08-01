@@ -36,9 +36,9 @@ public class RandomPointerNode {
     @Override
     public String toString() {
         return "RandomPointerNode{" +
-                "next=" + (next != null ? next.getData() : " null") +
-                ", random=" + (random!= null ? random.getData() : "null") +
-                ", data=" + data +
+                "data=" + data +
+                ", -->" + (next != null ? next.getData() : " null") +
+                ", ~~>" + (random!= null ? random.getData() : "null") +
                 '}';
     }
 }

@@ -1,14 +1,20 @@
 package com.raj.practice.Udemy;
 
+import com.raj.practice.LeetCode.LeetCode;
+import com.raj.practice.LeetCode.RandomPointerNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class Questions {
     public static void main(String[] args) {
-        integer2Roman();
+//        integer2Roman();
 //        roman2Integer();
 //        mypower();
 //        reverseInteger();
@@ -16,6 +22,48 @@ public class Questions {
 //        isPalindromeInteger();
 //        findSingleNumber();
 //        fizzbuzz();
+        duplicateRandomPtrLink();
+    }
+
+    private static void duplicateRandomPtrLink() {
+        RandomPointerNode head = LeetCode.getLinkedList();
+
+        RandomPointerNode temp;
+        RandomPointerNode curr = head;
+
+        // add new nodes next to current node
+        while (curr != null) {
+            temp = new RandomPointerNode(curr.getData());
+            temp.setNext(curr.getNext());
+            curr.setNext(temp);
+            curr = temp.getNext();
+        }
+
+        curr = head;
+        // add random points to new nodes
+        while (curr != null) {
+            curr.getNext().setRandom(curr.getRandom().getNext());
+            curr = curr.getNext().getNext();
+        }
+
+        RandomPointerNode newHead = head.getNext();
+        curr = head;
+        while (curr != null) {
+            temp = curr .getNext();
+            curr.setNext(temp != null ? temp.getNext() : null);
+            curr = temp;
+        }
+
+        BiConsumer<String, RandomPointerNode> printList = (s, n) -> {
+            System.out.println("List: " + s);
+            while (n != null) {
+                System.out.println(n);
+                n = n.getNext();
+            }
+        };
+
+        printList.accept("Original",head);
+        printList.accept("New Copy", newHead);
     }
 
     // TC : O(n), SC: O(1)
@@ -46,6 +94,7 @@ public class Questions {
         }
     }
 
+    // TC: O(13 * log(n)), SC : O(13)
     private static void integer2Roman() {
         int[] storeInt = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         String[] storeRoman = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
