@@ -22,7 +22,21 @@ public class Questions {
 //        isPalindromeInteger();
 //        findSingleNumber();
 //        fizzbuzz();
-        duplicateRandomPtrLink();
+//        duplicateRandomPtrLink();
+        twoSum();
+    }
+
+    private static void twoSum() {
+        int[] nums = {2,7,11,15 };
+        int target = 9;
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (!map.containsKey(nums[i])) {
+
+            }
+        }
     }
 
     private static void duplicateRandomPtrLink() {

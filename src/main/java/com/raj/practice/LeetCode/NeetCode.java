@@ -9,7 +9,7 @@ public class NeetCode {
 
         //containsDpulicate();
         //validAnagram();
-        //twoSum();
+        twoSum();
         //isValidPalindrome();
         //missingNumber();
         //groupAnagram();

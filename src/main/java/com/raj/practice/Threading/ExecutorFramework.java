@@ -28,7 +28,7 @@ public class ExecutorFramework {
             || taskOneResults.isCancelled()) {
             taskOneResults = executorService.submit(() -> {
                 while(true) {
-                    System.out.println("Executing task one" + Thread.currentThread().getName());
+                    System.out.println("Executing task one " + Thread.currentThread().getName());
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
