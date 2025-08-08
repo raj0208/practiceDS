@@ -23,7 +23,34 @@ public class Questions {
 //        findSingleNumber();
 //        fizzbuzz();
 //        duplicateRandomPtrLink();
-        twoSum();
+//        twoSum();
+        longestCommonPrefix();
+    }
+
+    // TC: O(n*m) where n = length of array, m = longest string in array, SC : O(1)
+    private static void longestCommonPrefix() {
+        String[] strs = { "flower","flow","flight" };
+        // Exception Scenario
+        if (strs.length == 0) {
+            System.out.println("Empty array");
+            return;
+        }
+
+        // Logic
+        String prefix = strs[0];
+
+        for (int i = 1; i < strs.length ; i++) {
+            while(strs[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) {
+                    System.out.println("No prefix");
+                    return;
+                }
+            }
+        }
+
+        // Result
+        System.out.println("Longest Comment Prefix is " + prefix);
     }
 
     private static void twoSum() {
