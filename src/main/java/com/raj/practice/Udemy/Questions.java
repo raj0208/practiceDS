@@ -31,8 +31,29 @@ public class Questions {
 //        longestCommonPrefix();
 //        findRepeatedDnaSequences();
 //        validAnagram();
-        longestPalindrame();
+//        longestPalindrame();
+        lengthOfLongestSubstring();
     }
+
+    // TC : O(n), SC: O(n)
+    private static void lengthOfLongestSubstring() {
+        String s = "abba";
+        Map<Character, Integer> map = new HashMap<>();
+        int ans = 0;
+        int left = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char ch = s.charAt(right);
+
+            if (map.containsKey(ch)) {
+                left = Math.max(left, map.get(ch) + 1);
+            }
+            map.put(ch, right);
+            ans = Math.max(ans, right - left + 1);
+        }
+
+        System.out.println("Length of longest substring :" + ans);
+    }
+
     static int start = 0, end = 0;
     private static void longestPalindrame() {
         String s = "bccbd";
