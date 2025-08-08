@@ -32,7 +32,38 @@ public class Questions {
 //        findRepeatedDnaSequences();
 //        validAnagram();
 //        longestPalindrame();
-        lengthOfLongestSubstring();
+//        lengthOfLongestSubstring();
+        reverseString();
+
+    }
+
+    private static void reverseString() {
+        //String s = "   the sky    is     blue   ";
+        String s = "     the      ";
+        char[] ch = s.toCharArray();
+        int n = ch.length;
+        char[] result = new char[n];
+        int result_index = 0;
+        int end = n - 1;
+
+        while(end >= 0) {
+            // get index of valid character from right to left
+            while (end >= 0 && ch[end] == ' ') end--;
+            int start = end;
+            // get index of valid character from right to left
+            while (start >= 0 && ch[start] != ' ') start--;
+            // add space if word already include in the result
+            if (result_index > 0) result[result_index++] = ' ';
+
+            for (int i = start + 1; i <= end; i++) {
+                result[result_index++] = ch[i];
+            }
+            end = start - 1;
+        }
+
+        if (result[result_index - 1] == ' ') result_index--;  // truncate last space
+
+        System.out.println("'" + new String(result, 0, result_index) + "'");
     }
 
     // TC : O(n), SC: O(n)
