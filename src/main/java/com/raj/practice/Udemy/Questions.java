@@ -3,11 +3,14 @@ package com.raj.practice.Udemy;
 import com.raj.practice.LeetCode.LeetCode;
 import com.raj.practice.LeetCode.RandomPointerNode;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -24,7 +27,25 @@ public class Questions {
 //        fizzbuzz();
 //        duplicateRandomPtrLink();
 //        twoSum();
-        longestCommonPrefix();
+//        longestCommonPrefix();
+        findRepeatedDnaSequences();
+    }
+
+    private static void findRepeatedDnaSequences() {
+        String s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT";
+        Set<String> result = new HashSet<>();
+        Set<String> set = new HashSet<>();
+
+        for (int i = 0; i <= s.length() - 10; i++) {
+            String seq = s.substring(i, i + 10);
+            if (set.contains(seq)) {
+                result.add(seq);
+            } else {
+                set.add(seq);
+            }
+        }
+
+        result.forEach(System.out::println);
     }
 
     // TC: O(n*m) where n = length of array, m = longest string in array, SC : O(1)
