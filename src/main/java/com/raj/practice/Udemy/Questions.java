@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Questions {
     public static void main(String[] args) {
@@ -28,7 +29,60 @@ public class Questions {
 //        duplicateRandomPtrLink();
 //        twoSum();
 //        longestCommonPrefix();
-        findRepeatedDnaSequences();
+//        findRepeatedDnaSequences();
+//        validAnagram();
+        longestPalindrame();
+    }
+    static int start = 0, end = 0;
+    private static void longestPalindrame() {
+        String s = "bccbd";
+        for (int i = 0; i < s.length(); i++) {
+            expandAroundCenter(s, i, i);
+            expandAroundCenter(s, i, i + 1);
+        }
+
+        System.out.println(s.substring(start, end + 1));
+    }
+
+    private static void expandAroundCenter(String s, int left, int right) {
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        left = left + 1;
+        right = right - 1;
+        if (end - start + 1 < right - left + 1) {
+            start = left;
+            end = right;
+        }
+    }
+
+    private static void validAnagram() {
+        String s = "car";
+        String t = "race";
+
+        if ((s == null && t != null) ||
+                (s != null && t == null) ||
+                (s.length() != t.length())) {
+            System.out.println("Not valid anagram");
+            return;
+        }
+
+        int[] result = new int[26];
+
+        for(int i =0; i < s.length(); i++) {
+            result[s.charAt(i) -'a'] += 1;
+            result[t.charAt(i) -'a'] -= 1;
+        }
+
+        for (int i = 0; i < result.length; i++) {
+            if (result[i] != 0) {
+                System.out.println("Not Valid Anagram");
+                return;
+            }
+        }
+
+        System.out.println("Valid anagram");
     }
 
     private static void findRepeatedDnaSequences() {
