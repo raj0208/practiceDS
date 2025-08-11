@@ -34,7 +34,40 @@ public class Questions {
 //        longestPalindrame();
 //        lengthOfLongestSubstring();
 //        reverseString();
-        integerToWords();
+//        integerToWords();
+        dutchflagproblem();
+    }
+
+    private static void dutchflagproblem() {
+        int[] array = {
+            1,0,2,0,1,2,0,2,1,0,0,2,0,0,1,1,0,2,2,1,1,1,0,0,0,0
+        };
+        System.out.println(Arrays.toString(array));
+        int low = 0, curr = 0, high = array.length - 1;
+        int temp = 0;
+
+        while(curr <= high) {
+            switch(array[curr]) {
+                case 0:
+                    temp = array[low];
+                    array[low] = array[curr];
+                    array[curr] = temp;
+                    low++;
+                    break;
+                case 1:
+                    curr++;
+                    break;
+                case 2:
+                default:
+                    temp = array[high];
+                    array[high] = array[curr];
+                    array[curr] = temp;
+                    high--;
+                    break;
+            }
+        }
+        System.out.println(Arrays.toString(array));
+
     }
 
     private static final String[] belowTwenty = { "", "One", "Two", "Three", "Four",
