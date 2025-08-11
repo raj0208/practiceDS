@@ -33,8 +33,86 @@ public class Questions {
 //        validAnagram();
 //        longestPalindrame();
 //        lengthOfLongestSubstring();
-        reverseString();
+//        reverseString();
+        integerToWords();
+    }
 
+    private static final String[] belowTwenty = { "", "One", "Two", "Three", "Four",
+            "Five", "Six", "Seven", "Eight", "Nine",
+            "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+            "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+    private static final String[] tens = { "", "", "Twenty", "Thirty", "Forty",
+            "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+
+    private static String words(int num) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (num < 20) {
+            stringBuilder.append(belowTwenty[num]);
+        } else if (num < 100) {
+            stringBuilder.append(tens[num / 10]).append(" ").append(belowTwenty[num % 10]);
+        } else if (num < 1000) {
+            stringBuilder.append(words(num / 100)).append(" Hundred ").append(words(num % 100));
+        } else if (num < 1000000) {
+            stringBuilder.append(words(num / 1000)).append(" Thousand ").append(words(num % 1000));
+        } else if (num < 1000000000) {
+            stringBuilder.append(words(num / 1000000)).append(" Million ").append(words(num % 1000000));
+        } else {
+            stringBuilder.append(words(num / 1000000000)).append(" Billion ").append(words(num % 1000000000));
+        }
+        return stringBuilder.toString().trim();
+    }
+
+
+    static String[] LESS_THAN_20 = {
+            "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+    };
+
+    static String[] TENS = {
+            "", "Ten", "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty " , "Ninety "
+    };
+
+    static String[] HUNDRED = { " Hundred "};
+
+    static String[] THOUSANDS = { "", "Thousand ", "Million ", "Billion " };
+
+    public static void integerToWords() {
+        int[] nums = {Integer.MAX_VALUE, 0, 1000000, 12345,1230567,50868, 110123};
+
+        for (int num: nums.clone()) {
+            System.out.println(num == 0 ? "Zero" : words(num));
+        }
+
+        for (int num: nums.clone()) {
+            int i = 0;
+            String words = "";
+            if (num == 0) {
+                System.out.println(LESS_THAN_20[num]);
+                continue;
+            }
+
+            while (num != 0) {
+                String s = converter(num % 1000);
+                if (!s.isEmpty())
+                    words = s + THOUSANDS[i] + words;
+                num /= 1000;
+                i++;
+            }
+
+            System.out.println(words.trim());
+        }
+    }
+
+    private static String converter(int n) {
+        if (n == 0) {
+            return "";
+        } else if (n < 20) {
+            return LESS_THAN_20[n] + " ";
+        }  else if (n < 100) {
+            return TENS[n / 10] + converter(n % 10);
+        } else {
+            return LESS_THAN_20[n / 100] + HUNDRED[0] + converter(n % 100);
+        }
     }
 
     private static void reverseString() {
