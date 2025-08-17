@@ -70,6 +70,8 @@ public class InterviewCake {
 //    # We can do this in O(n log n) time and O(1) space.
 //    # We can do this without destroying the input.
     public static void findOneRepeating(int[] numbers) {
+        // 1,2,3,2,4,3,5, lmin=1, lmax = 3, rmin=4, rmax=6
+        //
         int floor = 1;
         int ceiling = numbers.length - 1;
 

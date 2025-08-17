@@ -805,16 +805,6 @@ public class LeetCode {
             max = Math.max(max, curr);
         }
         System.out.println(max);
-
-
-
-
-        Stack<String> stack = new Stack<>();
-        stack.push("asdfa");
-        stack.push("asdf");
-        stack.pop();
-
-        
     }
 
     public static void duplicateLinked() {
