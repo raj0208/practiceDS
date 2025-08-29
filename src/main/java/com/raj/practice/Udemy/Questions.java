@@ -4,13 +4,7 @@ import com.raj.practice.LeetCode.LeetCode;
 import com.raj.practice.LeetCode.RandomPointerNode;
 
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -21,7 +15,7 @@ public class Questions {
 //        integer2Roman();
 //        roman2Integer();
 //        mypower();
-//        reverseInteger();
+//       reverseInteger();
 //        trailingZeros();
 //        isPalindromeInteger();
 //        findSingleNumber();
@@ -35,8 +29,174 @@ public class Questions {
 //        lengthOfLongestSubstring();
 //        reverseString();
 //        integerToWords();
-        dutchflagproblem();
+        //dutchflagproblem();
+//        myCalendarBooking();
+//        getTopKURLS();
+//        stringRotation();
+//        maxProductSum();
+//        mergeSortedArray();
+//        productExceptSelf();
+//        maxSubArraySum();
+
+        maxArea();
     }
+
+    // LC:
+    private static void maxArea() {
+        int[] height = {1,8,6,2,5,4,8,3,7}; //48
+
+        int left = 0;
+        int right = height.length - 1;
+        int max = 0;
+
+        while (left < right) {
+            max = Math.max(max, (right - left) * Math.min(height[left], height[right]));
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        System.out.println("Max Area is " + max);
+
+
+
+
+    }
+
+    // LC: 53
+    private static void maxSubArraySum() {
+        int[] nums = {5,4,-1,7,8}; //23
+        //int[] nums = {-2,1,-3,4,-1,2,1,-5,4};   // 6
+        int curr = nums[0];
+        int max = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            curr = Math.max(nums[i], nums[i] + curr);
+            max = Math.max(curr, max);
+        }
+        System.out.println(max);
+    }
+
+    // LC: 238
+    private static void productExceptSelf() {
+        int[] nums = {1,2,3,4};
+        int size = nums.length;
+        int left = 1;
+        int right = 1;
+        int[] res = new int[size];
+        Arrays.fill(res, 1);
+
+        for (int i = 0; i < size; i++) {
+            res[i] = res[i] * left;
+            left = left * nums[i];
+            res[size - 1 - i] = res[size - 1 - i] * right;
+            right = right * nums[size - 1 - i];
+        }
+
+        System.out.println(Arrays.toString(res));
+    }
+
+    // LC: 88
+    private static void mergeSortedArray() {
+        int[] nums1 = {1,2,3,0,0,0};
+        int m = 3;
+        int[] nums2 = {2,5,6};
+        int n = 3;
+
+
+        int i = m - 1;
+        int j = n - 1;
+        int k = m + n - 1;
+
+        while (i >= 0 && j >= 0) {
+            nums1[k--] = nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
+        }
+
+        while (j >= 0) {
+            nums1[k--] = nums2[j--];
+        }
+
+        System.out.println(Arrays.toString(nums1));
+    }
+
+    private static void maxProductSum() {
+        int[] nums = {7,1,5,3,6,4};
+
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+
+        for(int price : nums) {
+            minPrice = Math.min(minPrice, price);
+            maxProfit = Math.max(maxProfit, price - minPrice);
+        }
+        System.out.println(maxProfit);
+    }
+
+    private static void stringRotation() {
+        String s1 = "Hello";
+        String s2 = "elloH";
+
+        System.out.println(s1.concat(s1).contains(s2));
+    }
+
+    private static void myCalendarBooking() {
+        int[][] booking = {
+                {10,20},
+                {21,25},
+                {28,30},
+                {26,29},
+                {20, 30}
+        };
+        calendarUsingTreeMap(booking);
+        calendarUsingList(booking);
+    }
+
+    private static void calendarUsingList(int[][] slots) {
+        List<int[]> bookings = new ArrayList<>();
+
+        for(int[] slot : slots) {
+            boolean flag = true;
+            for(int[] booked : bookings) {
+                if (Math.max(booked[0], slot[0]) < Math.min(booked[1], slot[1])) {
+                    System.out.println("Overlap of " + Arrays.toString(slot) + " with " + Arrays.toString(booked));
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                bookings.add(slot);
+                System.out.println("Added " + Arrays.toString(slot));
+            }
+        }
+    }
+
+    private static void calendarUsingTreeMap(int[][] booking) {
+        TreeMap<Integer, Integer> calendar = new TreeMap<>();
+
+        for (int[] book: booking) {
+            // get the slot whose start time is equal or nearest (just less)
+            Integer startKey = calendar.floorKey(book[0]);
+            // if the slot end time is greater than startTime, there is overlap
+            if (startKey != null && calendar.get(startKey) > book[0]) {
+                System.out.println("Overlap of " + Arrays.toString(book) + " with " + startKey + "," + calendar.get(startKey));
+                continue;
+            }
+
+            // get the slot whose start time is equal or nearest (just more)
+            Integer endKey = calendar.ceilingKey(book[0]);
+            // if the slot
+            if (endKey != null && endKey < book[1]) {
+                System.out.println("Overlap of " + Arrays.toString(book) + " with " + endKey + "," + calendar.get(endKey));
+                continue;
+            }
+
+            calendar.put(book[0], book[1]);
+            System.out.println("Added booking " + book[0] + "," + book[1]);
+        }
+    }
+
 
     private static void dutchflagproblem() {
         int[] array = {
@@ -507,7 +667,7 @@ public class Questions {
 
         List<String> ans = new ArrayList<>(n);
         for (int i = 1; i <= n; i++) {
-            if (i % 5 == 0 && i % 3 == 0) {
+            if (i % 15 == 0) {
                 ans.add("FizzBuzz");
             } else if (i % 3 == 0) {
                 ans.add("Fizz");
@@ -519,5 +679,46 @@ public class Questions {
         }
 
         System.out.println(Arrays.toString(ans.toArray()));
+    }
+
+    public static void getTopKURLS() {
+        String[] logs = {
+                "/api/user", "/api/order", "/api/user", "/api/product",
+                "/api/user", "/api/order", "/api/cart", "/api/user",
+                "/api/product", "/api/cart", "/api/user", "/api/order"
+        };
+
+        TopKURL tracker = new TopKURL();
+
+        for (String url: logs) {
+            tracker.addAPICall(url);
+        }
+
+        List<Map.Entry<String, Integer>> topUrls = tracker.getTopKUrls(2);
+        topUrls.sort((c1, c2) -> c2.getValue() - c1.getValue());
+        topUrls.forEach(x -> System.out.println(x.getKey() + "->" + x.getValue()));
+    }
+
+    static class TopKURL {
+        Map<String, Integer> urlTracker = new HashMap<>();
+
+        public void addAPICall(String endPoint) {
+            urlTracker.put(endPoint, urlTracker.getOrDefault(endPoint, 0) + 1);
+        }
+
+        public List<Map.Entry<String, Integer>> getTopKUrls(int topK) {
+            PriorityQueue<Map.Entry<String, Integer>> queue =
+                new PriorityQueue<>(Comparator.comparingInt(Map.Entry::getValue));
+            //new PriorityQueue<>(Map.Entry.comparingByValue());
+
+            for (Map.Entry<String, Integer> entry : urlTracker.entrySet()) {
+                queue.offer(entry);
+                if (queue.size() > topK) {
+                    queue.poll();
+                }
+            }
+
+            return new ArrayList<>(queue);
+        }
     }
 }

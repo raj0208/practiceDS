@@ -5,15 +5,15 @@ import java.util.Set;
 
 public class InterviewCake {
     public static void main(String[] args) {
-//        findOneRepeating(new int[] { 1,5,3,6,2,4,5 });
+        findOneRepeating(new int[] { 1,5,3,6,2,4,5 });
 //        findTwoRepeatingNumbers(new int[] { 1,2,4,3,4,5,1 });
 //        uniqueTwoNumbers(new int[] { 1,2,4,3,4,5,1 });
 
-        maxBagValue(new CakeType[] {
-                new CakeType(7,160),
-                new CakeType(3,90),
-                new CakeType(2,15)
-        }, 20);
+//        maxBagValue(new CakeType[] {
+//                new CakeType(7,160),
+//                new CakeType(3,90),
+//                new CakeType(2,15)
+//        }, 20);
 
     }
 

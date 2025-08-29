@@ -6,7 +6,35 @@ import java.util.Stack;
 public class Chapter2 {
     public static void main(String[] args) {
         sortStack();
+        sort();
     }
+
+    private static void sort() {
+        Stack<Integer> stack = new Stack<>();
+        for(Integer integer : new Integer[] {5,3,7,4,9,1,2}) {
+            stack.push(integer);
+        }
+
+        System.out.println(Arrays.toString(stack.toArray()));
+
+        Stack<Integer> temp = new Stack<>();
+        while(stack.size() > 0) {
+            Integer value = stack.pop();
+
+            while (temp.size() > 0 && value < temp.peek()) {
+                stack.push(temp.pop());
+            }
+
+            temp.push(value);
+        }
+
+        for (Integer integer : temp) {
+            stack.push(integer);
+        }
+
+        System.out.println(Arrays.toString(stack.toArray()));
+    }
+
 
     private static void sortStack() {
         Stack<Integer> stack = new Stack<>();

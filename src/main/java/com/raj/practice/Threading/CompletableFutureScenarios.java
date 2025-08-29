@@ -30,16 +30,16 @@ public class CompletableFutureScenarios {
         // Scenario 1: Stock Market Live Data Aggregation
         //stockPriceAggregation();
         // Scenario 2: E-Commerce Order Processing with Parallel Tasks
-        //parallelProcessing();
-        //parallelProcessingWithException();
+        parallelProcessing();
+        parallelProcessingWithException();
         // Scenario 3: Real-time Fraud Detection in Payment Transactions
         //fraudDetection();
         // Scenario 4: Parallel Data Processing in a Big Data Pipeline
         //dataprocessing();
         // Scenario 5: Asynchronous Caching with Auto-Refresh
-        asyncCaching();
+        //asyncCaching();
         // Scenario 6: Distributed Computing with Worker Nodes
-        distributedComputing();
+        //distributedComputing();
     }
 
     private static void distributedComputing() {
@@ -200,25 +200,27 @@ public class CompletableFutureScenarios {
             }
         };
 
+        long start = System.currentTimeMillis();
+
         CompletableFuture<Void> task1 = CompletableFuture.runAsync(() -> {
-            simulateDelay(500);
-            System.out.println("Task 1 completed");
+            simulateDelay(3000);
+            System.out.println("Task 1 completed in " + (System.currentTimeMillis() - start));
         });
 
         CompletableFuture<Void> task2 = CompletableFuture.runAsync(() -> {
             simulateDelay(1500);
-            System.out.println("Task 2 completed");
+            System.out.println("Task 2 completed in " + (System.currentTimeMillis() - start));
         });
 
         CompletableFuture<Void> task3 = CompletableFuture.runAsync(() -> {
-            simulateDelay(1000);
-            System.out.println("Task 3 completed");
+            simulateDelay(500);
+            System.out.println("Task 3 completed in " + (System.currentTimeMillis() - start));
         });
 
         CompletableFuture<Void> allTasks = CompletableFuture.allOf(task1, task2, task3);
         allTasks.join();
 
-        System.out.println("All tasks completed");
+        System.out.println("All tasks completed in " + (System.currentTimeMillis() - start));
     }
 
     private static void stockPriceAggregation() {
