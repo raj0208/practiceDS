@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Questions {
@@ -35,10 +36,25 @@ public class Questions {
 //        stringRotation();
 //        maxProductSum();
 //        mergeSortedArray();
-//        productExceptSelf();
+        productExceptSelf();
 //        maxSubArraySum();
+//        maxArea();
+//        reverseBit();
+    }
 
-        maxArea();
+    private static void reverseBit() {
+        Consumer<Integer> reverseall = num -> {
+            System.out.println(num + " binary " + Integer.toBinaryString(num));
+            int result = 0;
+            for (int i = 0; i < 32; i++) {
+                result =  result << 1 | num & 1;
+                num = num >> 1;
+            }
+            System.out.println("reverse is " + result);
+        };
+
+        reverseall.accept(35);
+        reverseall.accept(-1006632960);
     }
 
     // LC:
@@ -59,10 +75,6 @@ public class Questions {
         }
 
         System.out.println("Max Area is " + max);
-
-
-
-
     }
 
     // LC: 53

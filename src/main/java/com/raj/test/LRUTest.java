@@ -3,9 +3,19 @@ package com.raj.test;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class LRUTest {
+    public static void main(String[] args) {
+        LRU<Integer, Integer> cache = new LRU<>(2);
+        Integer value = cache.get(1);
+        System.out.println(value);
+
+    }
+
+
+
 }
 
 class LRUCache
@@ -130,7 +140,6 @@ class CacheItem
 
     /**
      * Contructor
-     * @param  CacheItem key
      * @param value CacheItem value
      */
     public CacheItem (int value)

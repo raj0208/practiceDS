@@ -1,20 +1,16 @@
 package com.raj;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class Testing {
     public static void main(String[] args) {
         //integer2Roman();
         //romanToInteger();
-        reverseList();
+//        reverseList();
+
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+
     }
 
     private void mm() {
